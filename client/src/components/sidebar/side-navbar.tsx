@@ -19,8 +19,31 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import * as logoutUser from "@/actions/logout-user";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function SideNavbar() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: logoutUser.logoutUser,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["validate_token"] });
+      toast.success("Succesfully logged out user");
+      navigate("/auth");
+    },
+    onError: () => {
+      toast.error("Something went wrong.");
+    },
+  });
+
+  function handleLogoutButton() {
+    mutation.mutate();
+  }
+
   return (
     <nav className="flex h-screen items-center justify-center border-r">
       <div className="flex h-full w-full flex-col items-center justify-between px-3 py-6">
@@ -67,7 +90,10 @@ export default function SideNavbar() {
         </div>
 
         <div className="flex flex-col space-y-6">
-          <button className="flex items-center justify-center rounded-lg p-3 transition-all hover:bg-destructive hover:text-background">
+          <button
+            className="flex items-center justify-center rounded-lg p-3 transition-all hover:bg-destructive hover:text-background"
+            onClick={handleLogoutButton}
+          >
             <LogOutIcon />
           </button>
         </div>

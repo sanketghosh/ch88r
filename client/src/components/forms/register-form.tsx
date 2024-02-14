@@ -1,11 +1,13 @@
 import { cn } from "@/lib/utils";
-import FormInput from "./form-input";
 import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as registerUser from "@/actions/register-user";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+
+// components
+import FormInput from "@/components/forms/form-input";
+import { Button } from "@/components/ui/button";
 
 interface RegisterFormProps {
   className?: string;
@@ -28,6 +30,7 @@ export default function RegisterForm({ className }: RegisterFormProps) {
   const REGISTER_INPUT_FIELDS = [
     {
       htmlAttr: "username",
+      type: "text",
       defaultValue: "@johndoe",
       label: "Username",
       func: register("username", {
@@ -46,6 +49,7 @@ export default function RegisterForm({ className }: RegisterFormProps) {
     },
     {
       htmlAttr: "password",
+      type: "password",
       defaultValue: "goodpassowrd123456",
       label: "Password",
       func: register("password", {
@@ -60,6 +64,7 @@ export default function RegisterForm({ className }: RegisterFormProps) {
     },
     {
       htmlAttr: "confirm-password",
+      type: "password",
       defaultValue: "goodpassowrd123456",
       label: "Confirm Password",
       func: register("confirmPassword", {
@@ -77,11 +82,13 @@ export default function RegisterForm({ className }: RegisterFormProps) {
   ];
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: registerUser.registerUser,
     onSuccess: async () => {
       toast.success("Registered successfully");
+      await queryClient.invalidateQueries({ queryKey: ["validate_token"] });
       navigate("/");
     },
 
@@ -107,6 +114,7 @@ export default function RegisterForm({ className }: RegisterFormProps) {
               func={inp.func}
               errorExists={inp.errorExists}
               errorMessage={inp.errorMessage}
+              type={inp.type}
             />
           );
         })}

@@ -8,7 +8,8 @@ interface FormInputProps {
   defaultValue?: string;
   errorExists?: FieldError;
   errorMessage?: string;
-  func: UseFormRegisterReturn | any;
+  func: UseFormRegisterReturn;
+  type: string;
 }
 
 export default function FormInput({
@@ -18,12 +19,17 @@ export default function FormInput({
   errorExists,
   errorMessage,
   func,
+  type,
 }: FormInputProps) {
   return (
     <div className="space-y-1">
       <Label htmlFor={htmlAttr}>{label}</Label>
-      <Input id={htmlAttr} {...func} />
-      {errorExists && <p>{errorMessage}</p>}
+      <Input id={htmlAttr} type={type} {...func} />
+      {errorExists && (
+        <p className="mt-1 text-[13px] font-medium text-red-500">
+          *{errorMessage}
+        </p>
+      )}
     </div>
   );
 }

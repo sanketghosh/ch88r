@@ -6,6 +6,7 @@ import cors from "cors";
 // local modules
 import { connectDB } from "./config/dbConnection";
 import usersRoute from "./routes/users.routes";
+import authRoutes from "./routes/auth.routes";
 
 // database connection
 connectDB();
@@ -24,6 +25,7 @@ app.use(
 );
 
 app.use("/api/v1", usersRoute);
+app.use("/api/v1", authRoutes);
 
 const PORT = process.env.PORT || 8000;
 

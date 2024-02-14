@@ -49,17 +49,17 @@ export default function SideNavbar() {
 
           {/* user settings and user realed sheet open */}
           <Sheet>
-            <SheetTrigger>
-              <NavBaseBtn>
+            <NavBaseBtn>
+              <SheetTrigger asChild>
                 <UserIcon />
-              </NavBaseBtn>
-            </SheetTrigger>
+              </SheetTrigger>
+            </NavBaseBtn>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
+                <SheetTitle>Account Settings</SheetTitle>
                 <SheetDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
+                  You can change settings and cutsomize bunch of other stuffs
+                  for your convenience.
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
@@ -78,8 +78,8 @@ export default function SideNavbar() {
 
 function NavBaseBtn({ children }: { children: React.ReactNode }) {
   return (
-    <button className="flex items-center justify-center rounded-lg bg-muted p-3 transition-all hover:bg-foreground hover:text-background">
+    <span className="flex cursor-pointer items-center justify-center rounded-lg bg-muted p-3 transition-all hover:bg-foreground hover:text-background">
       {children}
-    </button>
+    </span>
   );
 }

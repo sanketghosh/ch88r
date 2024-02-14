@@ -6,10 +6,13 @@ export default function ChatSectionTopbar() {
           <img src="./profile-pic1.svg" alt="username" className="" />
         </div>
         <div>
-          <h1 className="text-lg font-medium lg:text-xl">@jhonnywalker</h1>
-          <p className="text-xs text-muted-foreground md:text-sm">
-            Activated 5h ago.
-          </p>
+          <h1 className="text-lg font-medium lg:text-xl">@craigsmith</h1>
+          <div className="flex items-center gap-1">
+            <div className="h-2 w-2 rounded-full bg-green-500"></div>
+            <p className="text-xs text-muted-foreground md:text-sm">
+              Active now
+            </p>
+          </div>
         </div>
       </div>
     </div>

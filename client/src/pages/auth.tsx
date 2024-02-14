@@ -17,7 +17,7 @@ export default function Auth() {
   return (
     <div className="flex h-screen flex-col items-center justify-center space-y-5 p-4 md:p-6 lg:p-8">
       <div className="w-[350px] space-y-1 text-center sm:w-[400px] md:w-[420px] lg:w-[450px]">
-        <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl">4at</h1>
+        <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl">Ch8</h1>
         <p className="text-sm leading-tight text-muted-foreground lg:text-base">
           A modern chat app for the people who love to experiment with new
           things. Register today and claim your username!
@@ -41,11 +41,11 @@ export default function Auth() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <LoginForm className="space-y-3" />
+              <LoginForm className="space-y-5" />
             </CardContent>
-            <CardFooter>
+            {/* <CardFooter>
               <Button>Continue</Button>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </TabsContent>
         <TabsContent value="register">
@@ -58,11 +58,11 @@ export default function Auth() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <RegisterForm className="space-y-2" />
+              <RegisterForm className="space-y-5" />
             </CardContent>
-            <CardFooter>
+            {/* <CardFooter>
               <Button>Register</Button>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </TabsContent>
       </Tabs>

@@ -5,6 +5,7 @@ import {
   validateTokenHandler,
 } from "../controllers/auth.controllers";
 import { check } from "express-validator";
+import { verifyTokenMiddleware } from "../middlewares/auth.middlewares";
 
 const router = express.Router();
 
@@ -32,6 +33,6 @@ router.post(
 router.post("/logout", logoutUserHandler);
 
 // GET api/v1/validate-token
-router.get("/validate-token", validateTokenHandler, validateTokenHandler);
+router.get("/validate-token", verifyTokenMiddleware, validateTokenHandler);
 
 export default router;

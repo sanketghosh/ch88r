@@ -9,7 +9,9 @@ export const validateToken = async () => {
     throw new Error("Invalid token");
   }
 
-  //   return response.json();
-  const res = await response.json();
+  const res = response.json();
   return res;
+
+  /*  const res = await response.json();
+  return res; */
 };

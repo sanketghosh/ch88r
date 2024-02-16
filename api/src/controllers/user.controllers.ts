@@ -33,7 +33,7 @@ export const registerUserHandler = async (req: Request, res: Response) => {
     // jwt token sign
     const token = jwt.sign(
       {
-        userId: user.id,
+        userId: user._id,
       },
       process.env.JWT_SECRET_KEY as string,
       {
@@ -47,7 +47,11 @@ export const registerUserHandler = async (req: Request, res: Response) => {
       maxAge: 86400000,
     });
 
-    return res.status(200).json({ message: "Registered user OK" });
+    return res.status(200).json({
+      message: "Registered user OK",
+      userID: user._id,
+      username: user.username,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong",

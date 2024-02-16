@@ -17,6 +17,6 @@ export const loginUser = async (formData: LoginFormDataTypes) => {
   if (!response.ok) {
     throw new Error(responseBody.message);
   }
-
+  // console.log(responseBody.username);
   return responseBody;
 };

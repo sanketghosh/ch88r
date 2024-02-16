@@ -65,7 +65,10 @@ export default function LoginForm({ className }: LoginFormProps) {
 
   const mutation = useMutation({
     mutationFn: loginUser.loginUser,
-    onSuccess: async () => {
+    onSuccess: async (data) => {
+      const { username } = data;
+      localStorage.setItem("USERNAME", username);
+
       toast.success("Logged in successfully.");
       await queryClient.invalidateQueries({ queryKey: ["validate_token"] });
       navigate("/");

@@ -44,7 +44,7 @@ export const loginUserHandler = async (req: Request, res: Response) => {
 
     // jwt token sign
     const token = jwt.sign(
-      { userId: user.id },
+      { userId: user._id },
       process.env.JWT_SECRET_KEY as string,
       { expiresIn: "1d" }
     );
@@ -55,7 +55,11 @@ export const loginUserHandler = async (req: Request, res: Response) => {
       maxAge: 86400000,
     });
 
-    return res.status(200).json({ userID: user._id });
+    return res.status(200).json({
+      message: "Login user OK",
+      userID: user._id,
+      username: user.username,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong",
@@ -78,7 +82,7 @@ export const logoutUserHandler = async (req: Request, res: Response) => {
 };
 
 /**
- * @description LOGOUT USER
+ * @description VALIDATE TOKEN
  * @route POST /api/v1/validate-token
  * @access PUBLIC
  */

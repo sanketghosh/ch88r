@@ -22,12 +22,18 @@ export const verifyTokenMiddleware = (
 
   if (!token) {
     return res.status(401).json({
-      message: "Unauthorized",
+      message: "Unauthorized, no token provided",
     });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+
+    if (!decoded) {
+      res.status(401).json({
+        message: "Unauthorized, invalid token",
+      });
+    }
 
     req.userId = (decoded as JwtPayload).userId;
 

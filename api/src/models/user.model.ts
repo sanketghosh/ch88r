@@ -7,17 +7,20 @@ export type UserType = {
   password: string;
 };
 
-const userSchema = new mongoose.Schema<UserType>({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new mongoose.Schema<UserType>(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 userSchema.pre("save", async function passwordHash(next) {
   if (this.isModified("password")) {

@@ -9,7 +9,7 @@ router.post(
   [
     check(
       "username",
-      "Username is required and must be atleast 5 characters and atmost 15 characters"
+      "Username is required and must be at least 5 characters and at most 15 characters"
     )
       .isString()
       .isLength({

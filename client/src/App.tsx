@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Auth, ErrorPage, Home, SelectAvatar } from "./pages";
+import { Auth, Home } from "./pages";
 import ProtectedRoute from "./components/protected/protected-route";
 import { useAppContext } from "./contexts/app-context";
 

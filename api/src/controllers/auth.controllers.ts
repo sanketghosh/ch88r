@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import User from "../models/user.model";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+
+import User from "../models/user.model";
+import { generateJWT } from "../utils/generate-jwt-token";
 
 /**
  * @description LOGIN USER
@@ -42,24 +43,18 @@ export const loginUserHandler = async (req: Request, res: Response) => {
       });
     }
 
-    // jwt token sign
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET_KEY as string,
-      { expiresIn: "1d" }
-    );
-
-    res.cookie("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 86400000,
-    });
-
-    return res.status(200).json({
-      message: "Login user OK",
-      userID: user._id,
-      username: user.username,
-    });
+    if (user && isMatch) {
+      generateJWT(user._id, res);
+      return res.status(200).json({
+        message: "Login user OK",
+        userID: user._id,
+        username: user.username,
+      });
+    } else {
+      res
+        .status(400)
+        .json({ message: "ERROR! Internal error, something went wrong." });
+    }
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong",
@@ -74,11 +69,17 @@ export const loginUserHandler = async (req: Request, res: Response) => {
  */
 
 export const logoutUserHandler = async (req: Request, res: Response) => {
-  res.cookie("auth_token", "", {
-    expires: new Date(0),
-  });
+  try {
+    res.cookie("auth_token", "", {
+      expires: new Date(0),
+    });
 
-  res.send();
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(400).json({
+      message: "Internal server error, log out failed.",
+    });
+  }
 };
 
 /**

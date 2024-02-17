@@ -4,6 +4,8 @@ import * as validateToken from "@/actions/validate-token";
 
 type AppContextType = {
   isLoggedIn: boolean;
+  getUsername: string | null;
+  deleteUsername: () => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -20,10 +22,17 @@ export const AppContextProvider = ({
     retry: false,
   });
 
+  const getUsername = localStorage.getItem("USERNAME");
+  const deleteUsername = () => {
+    localStorage.removeItem("USERNAME");
+  };
+
   return (
     <AppContext.Provider
       value={{
         isLoggedIn: !isError,
+        getUsername,
+        deleteUsername,
       }}
     >
       {children}

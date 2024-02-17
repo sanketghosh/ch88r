@@ -1,16 +1,22 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import User from "../models/user.model";
-import jwt from "jsonwebtoken";
 
+import User from "../models/user.model";
+import { generateJWT } from "../utils/generate-jwt-token";
+
+/**
+ *
+ * @description REGISTER USER
+ * @route POST api/v1/register
+ * @access PUBLIC
+ *
+ */
 export const registerUserHandler = async (req: Request, res: Response) => {
   // for express validator
   const errors = validationResult(req);
   if (!errors.isEmpty) {
     return res.status(400).json({ message: errors.array() });
   }
-
-  // lets create a new user
 
   try {
     let { username, password } = req.body;
@@ -28,30 +34,22 @@ export const registerUserHandler = async (req: Request, res: Response) => {
       username: username,
       password: password,
     });
-    await user.save();
 
-    // jwt token sign
-    const token = jwt.sign(
-      {
-        userId: user._id,
-      },
-      process.env.JWT_SECRET_KEY as string,
-      {
-        expiresIn: "1d",
-      }
-    );
+    if (user) {
+      await user.save();
 
-    res.cookie("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 86400000,
-    });
+      generateJWT(user._id, res);
 
-    return res.status(200).json({
-      message: "Registered user OK",
-      userID: user._id,
-      username: user.username,
-    });
+      return res.status(200).json({
+        message: "Registered user OK",
+        userID: user._id,
+        username: user.username,
+      });
+    } else {
+      res
+        .status(400)
+        .json({ message: "ERROR! Internal error, something went wrong." });
+    }
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong",

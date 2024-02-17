@@ -23,8 +23,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as logoutUser from "@/actions/logout-user";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "@/contexts/app-context";
 
 export default function SideNavbar() {
+  const { deleteUsername } = useAppContext();
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -32,6 +35,7 @@ export default function SideNavbar() {
     mutationFn: logoutUser.logoutUser,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["validate_token"] });
+      deleteUsername();
       toast.success("Succesfully logged out user");
       navigate("/auth");
     },

@@ -47,8 +47,8 @@ export const registerUserHandler = async (req: Request, res: Response) => {
       userId: newUser.id,
       userUsername: newUser.username,
       userEmail: newUser.email,
-      userCreatedAt: newUser.createdAt,
       userAvatar: newUser.avatar,
+      userCreatedAt: newUser.createdAt,
       message: "SUCCESS! You have been registered.",
     };
 
@@ -110,8 +110,8 @@ export const loginUserHandler = async (req: Request, res: Response) => {
       userId: user.id,
       userUsername: user.username,
       userEmail: user.email,
-      userCreatedAt: user.createdAt,
       userAvatar: user.avatar,
+      userCreatedAt: user.createdAt,
       message: "SUCCESS! You have been logged in.",
     };
 

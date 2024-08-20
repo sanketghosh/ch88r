@@ -1,13 +1,14 @@
-import * as loginUser from "@/actions/login-user";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import AuthCardWrapper from "../cards/auth-card-wrapper";
-
+import * as loginUser from "@/actions/auth-actions/login-user";
+import AuthCardWrapper from "@/components/cards/auth-card-wrapper";
 import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import * as z from "zod";
-import { Button } from "../ui/button";
+
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,10 +16,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useAuthContext } from "@/providers/auth-context-provider";
 
 export default function LoginForm() {
+  const navigate = useNavigate();
+  const { updateUser } = useAuthContext();
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -30,7 +35,9 @@ export default function LoginForm() {
   const mutation = useMutation({
     mutationFn: loginUser.loginUser,
     onSuccess: async (data) => {
-      toast.success(data);
+      toast.success(data.message);
+      updateUser(data);
+      navigate("/");
     },
 
     onError: (error: Error) => {
@@ -47,6 +54,7 @@ export default function LoginForm() {
     <AuthCardWrapper
       title="Welcome Back!"
       description="Continue from where you left last time, your personal data is safe and secure with us."
+      footer="If you don't have an account just create one by switching to register tab."
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(formSubmitHandler)}>

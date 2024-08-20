@@ -1,18 +1,18 @@
-import { useAppContext } from "@/contexts/app-context";
+import { useAuthContext } from "@/providers/auth-context-provider";
 import { PropsWithChildren, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 type ProtectedRoutePropsType = PropsWithChildren;
 
 export default function ProtectedRoute({ children }: ProtectedRoutePropsType) {
-  const { isLoggedIn } = useAppContext();
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn === false) {
+    if (!user) {
       navigate("/auth", { replace: true });
     }
-  }, [isLoggedIn, navigate]);
+  }, [user, navigate]);
 
   return children;
 }

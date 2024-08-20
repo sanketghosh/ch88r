@@ -3,8 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 
-// local modules
-import authRoutes from "./routes/auth.routes";
+import { authRoutes } from "./routes";
 
 // port
 const PORT = process.env.PORT || 8000;

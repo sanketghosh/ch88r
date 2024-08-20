@@ -1,7 +1,7 @@
-import { useAppContext } from "@/contexts/app-context";
+import { useAuthContext } from "@/providers/auth-context-provider";
 
 export default function ChatSectionTopbar() {
-  const { getUsername } = useAppContext();
+  const { user } = useAuthContext();
 
   return (
     <div className="border-b px-3 py-3">
@@ -10,7 +10,9 @@ export default function ChatSectionTopbar() {
           <img src="./profile-pic1.svg" alt="username" className="" />
         </div>
         <div>
-          <h1 className="text-lg font-medium lg:text-xl">@{getUsername}</h1>
+          <h1 className="text-lg font-medium lg:text-xl">
+            @{user?.userUsername}
+          </h1>
           <div className="flex items-center gap-1">
             <div className="h-2 w-2 rounded-full bg-green-500"></div>
             <p className="text-xs text-muted-foreground md:text-sm">

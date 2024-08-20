@@ -1,9 +1,10 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactDOM from "react-dom/client";
+import { Toaster } from "sonner";
 import App from "./App.tsx";
 import "./index.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "sonner";
-import { AppContextProvider } from "./contexts/app-context.tsx";
+import { AuthContextProvider } from "./providers/auth-context-provider.tsx";
+import { ThemeProvider } from "./providers/theme-provider.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,10 +15,12 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
-    <AppContextProvider>
-      <Toaster />
-      <App />
-    </AppContextProvider>
-  </QueryClientProvider>,
+  <AuthContextProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <QueryClientProvider client={queryClient}>
+        <Toaster />
+        <App />
+      </QueryClientProvider>
+    </ThemeProvider>
+  </AuthContextProvider>,
 );

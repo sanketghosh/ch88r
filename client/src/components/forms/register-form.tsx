@@ -1,13 +1,10 @@
-import * as registerUser from "@/actions/register-user";
+import * as registerUser from "@/actions/auth-actions/register-user";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import AuthCardWrapper from "../cards/auth-card-wrapper";
 
-import { RegisterSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,10 +12,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { RegisterSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import * as z from "zod";
 
 export default function LoginForm() {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -32,7 +34,9 @@ export default function LoginForm() {
   const mutation = useMutation({
     mutationFn: registerUser.registerUser,
     onSuccess: async (data) => {
-      toast.success(data);
+      toast.success(data.message);
+      localStorage.setItem("userData", JSON.stringify(data));
+      navigate("/");
     },
 
     onError: (error: Error) => {
@@ -41,14 +45,15 @@ export default function LoginForm() {
   });
 
   const formSubmitHandler = (values: z.infer<typeof RegisterSchema>) => {
-    console.log(values);
     mutation.mutate(values);
+    console.log(values);
   };
 
   return (
     <AuthCardWrapper
       title="Get Started."
       description="Join ch88r and feel free chat with friends, family and mates in an end-to-end encypted environment."
+      footer="If you already have an account, just login by switching to login tab."
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(formSubmitHandler)}>

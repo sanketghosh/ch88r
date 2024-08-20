@@ -5,6 +5,10 @@ export const RegisterSchema = z
   .object({
     username: z
       .string()
+      .regex(
+        /^[a-zA-Z0-9_]+$/,
+        "Username can only contain letters, numbers, and underscores, without spaces",
+      )
       .min(4, {
         message: "Username of atleast four characters needed.",
       })

@@ -1,10 +1,4 @@
-import {
-  PlusIcon,
-  HomeIcon,
-  Settings2Icon,
-  UserIcon,
-  LogOutIcon,
-} from "lucide-react";
+import * as logoutUser from "@/actions/auth-actions/logout-user";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,23 +13,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as logoutUser from "@/actions/logout-user";
-import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { HomeIcon, LogOutIcon, PlusIcon, UserIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "@/contexts/app-context";
+import { toast } from "sonner";
 
 export default function SideNavbar() {
-  const { deleteUsername } = useAppContext();
-
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: logoutUser.logoutUser,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["validate_token"] });
-      deleteUsername();
       toast.success("Succesfully logged out user");
       navigate("/auth");
     },

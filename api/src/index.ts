@@ -1,17 +1,15 @@
-import express from "express";
-import "dotenv/config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import "dotenv/config";
+import express from "express";
 
 // local modules
-import { connectDB } from "./config/dbConnection";
-import usersRoute from "./routes/users.routes";
 import authRoutes from "./routes/auth.routes";
-import messageRoutes from "./routes/message.routes";
 
-// database connection
-connectDB();
+// port
+const PORT = process.env.PORT || 8000;
 
+// intializing app
 const app = express();
 
 // middlewares
@@ -22,14 +20,10 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-  })
+  }),
 );
 
-app.use("/api/v1", usersRoute);
-app.use("/api/v1", authRoutes);
-app.use("/api/v1", messageRoutes);
-
-const PORT = process.env.PORT || 8000;
+app.use("/api/v1/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`SUCCESS: app listening on http://localhost:${PORT}`);

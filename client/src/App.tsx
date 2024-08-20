@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Auth, Home } from "./pages";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/protected/protected-route";
 import { useAppContext } from "./contexts/app-context";
+import { Auth, ErrorPage, Home } from "./pages";
 
 export default function App() {
   const { isLoggedIn } = useAppContext();
@@ -20,6 +20,7 @@ export default function App() {
           }
         />
         <Route path="/auth" element={<Auth />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
   );

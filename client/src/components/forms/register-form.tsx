@@ -1,95 +1,38 @@
-import { cn } from "@/lib/utils";
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as registerUser from "@/actions/register-user";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import AuthCardWrapper from "../cards/auth-card-wrapper";
 
-// components
-import FormInput from "@/components/forms/form-input";
-import { Button } from "@/components/ui/button";
+import { RegisterSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
 
-interface RegisterFormProps {
-  className?: string;
-}
-
-export type RegisterFormDataType = {
-  username: string;
-  password: string;
-  confirmPassword: string;
-};
-
-export default function RegisterForm({ className }: RegisterFormProps) {
-  const {
-    register,
-    formState: { errors },
-    watch,
-    handleSubmit,
-  } = useForm<RegisterFormDataType>();
-
-  const REGISTER_INPUT_FIELDS = [
-    {
-      htmlAttr: "username",
-      type: "text",
-      defaultValue: "@johndoe",
-      label: "Username",
-      func: register("username", {
-        required: "This field is required",
-        minLength: {
-          value: 5,
-          message: "Username must be of atleast 5 characters",
-        },
-        maxLength: {
-          value: 15,
-          message: "Username must not exceed 15 characters",
-        },
-      }),
-      errorExists: errors.username,
-      errorMessage: errors.username?.message,
+export default function LoginForm() {
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
-    {
-      htmlAttr: "password",
-      type: "password",
-      defaultValue: "goodpassowrd123456",
-      label: "Password",
-      func: register("password", {
-        required: "This field is required",
-        minLength: {
-          value: 6,
-          message: "Password must be of atleast 6 characters",
-        },
-      }),
-      errorExists: errors.password,
-      errorMessage: errors.password?.message,
-    },
-    {
-      htmlAttr: "confirm-password",
-      type: "password",
-      defaultValue: "goodpassowrd123456",
-      label: "Confirm Password",
-      func: register("confirmPassword", {
-        validate: (val) => {
-          if (!val) {
-            return "This field is required";
-          } else if (watch("password") !== val) {
-            return "Not matched with the password you entered";
-          }
-        },
-      }),
-      errorExists: errors.confirmPassword,
-      errorMessage: errors.confirmPassword?.message,
-    },
-  ];
-
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  });
 
   const mutation = useMutation({
     mutationFn: registerUser.registerUser,
-    onSuccess: async () => {
-      toast.success("Registered successfully");
-      await queryClient.invalidateQueries({ queryKey: ["validate_token"] });
-      navigate("/");
+    onSuccess: async (data) => {
+      toast.success(data);
     },
 
     onError: (error: Error) => {
@@ -97,29 +40,95 @@ export default function RegisterForm({ className }: RegisterFormProps) {
     },
   });
 
-  const handleFormSubmit = handleSubmit((data) => {
-    mutation.mutate(data);
-  });
+  const formSubmitHandler = (values: z.infer<typeof RegisterSchema>) => {
+    console.log(values);
+    mutation.mutate(values);
+  };
 
   return (
-    <form className={cn(className)} onSubmit={handleFormSubmit}>
-      <div className="space-y-3">
-        {REGISTER_INPUT_FIELDS.map((inp) => {
-          return (
-            <FormInput
-              key={inp.htmlAttr}
-              htmlAttr={inp.htmlAttr}
-              label={inp.label}
-              defaultValue={inp.defaultValue}
-              func={inp.func}
-              errorExists={inp.errorExists}
-              errorMessage={inp.errorMessage}
-              type={inp.type}
+    <AuthCardWrapper
+      title="Get Started."
+      description="Join ch88r and feel free chat with friends, family and mates in an end-to-end encypted environment."
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(formSubmitHandler)}>
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="johndoe"
+                      type="text"
+                      disabled={mutation.isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          );
-        })}
-      </div>
-      <Button className="mt-3">Register</Button>
-    </form>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="johndoe@mail.com"
+                      type="email"
+                      disabled={mutation.isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="C5AjJHe9FQvLlg"
+                      type="password"
+                      disabled={mutation.isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="C5AjJHe9FQvLlg"
+                      type="password"
+                      disabled={mutation.isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <Button className="mt-4 w-full">Register</Button>
+        </form>
+      </Form>
+    </AuthCardWrapper>
   );
 }

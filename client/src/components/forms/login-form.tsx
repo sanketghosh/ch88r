@@ -1,5 +1,6 @@
+// PACKAGES
 import * as loginUser from "@/actions/auth-actions/login-user";
-import AuthCardWrapper from "@/components/cards/auth-card-wrapper";
+import { useAuthContext } from "@/providers/auth-context-provider";
 import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -8,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import * as z from "zod";
 
+// COMPONENTS
+import AuthCardWrapper from "@/components/cards/auth-card-wrapper";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,7 +21,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuthContext } from "@/providers/auth-context-provider";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -46,8 +48,8 @@ export default function LoginForm() {
   });
 
   const formSubmitHandler = (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
     mutation.mutate(values);
+    console.log(values);
   };
 
   return (

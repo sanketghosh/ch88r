@@ -1,4 +1,3 @@
-import * as logoutUser from "@/actions/auth-actions/logout-user";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,44 +12,44 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useMutation } from "@tanstack/react-query";
-import { HomeIcon, LogOutIcon, PlusIcon, UserIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+import { HomeIcon, PlusIcon, UserIcon } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button, buttonVariants } from "../ui/button";
 
 export default function SideNavbar() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: logoutUser.logoutUser,
-    onSuccess: async () => {
-      toast.success("Succesfully logged out user");
-      navigate("/auth");
-    },
-    onError: () => {
-      toast.error("Something went wrong.");
-    },
-  });
+  // const mutation = useMutation({
+  //   mutationFn: logoutUser.logoutUser,
+  //   onSuccess: async () => {
+  //     toast.success("Succesfully logged out user");
+  //     navigate("/auth");
+  //   },
+  //   onError: () => {
+  //     toast.error("Something went wrong.");
+  //   },
+  // });
 
-  function handleLogoutButton() {
-    mutation.mutate();
-  }
+  // function handleLogoutButton() {
+  //   mutation.mutate();
+  // }
 
   return (
     <nav className="flex h-screen items-center justify-center border-r">
-      <div className="flex h-full w-full flex-col items-center justify-between px-3 py-6">
-        <div className="flex w-full flex-col items-center space-y-6">
+      <div className="flex h-full w-full flex-col items-center justify-between px-2 py-6">
+        <div className="flex w-full flex-col items-center space-y-4">
           {/* home icon */}
-          <NavBaseBtn>
+          <Button size={"icon"} variant={"outline"} className="size-12">
             <HomeIcon />
-          </NavBaseBtn>
+          </Button>
 
           {/* add/join with group/user */}
           <DropdownMenu>
             <DropdownMenuTrigger className="m-0 p-0">
-              <NavBaseBtn>
+              <Button size={"icon"} variant={"outline"} className="size-12">
                 <PlusIcon />
-              </NavBaseBtn>
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="ml-10 space-y-1 px-2 py-2">
               <DropdownMenuItem className="cursor-pointer p-2">
@@ -61,14 +60,22 @@ export default function SideNavbar() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        </div>
 
+        <div className="flex flex-col space-y-6">
           {/* user settings and user realed sheet open */}
           <Sheet>
-            <NavBaseBtn>
-              <SheetTrigger asChild>
+            <SheetTrigger>
+              <Link
+                to={"/account"}
+                className={cn(
+                  buttonVariants({ size: "icon", variant: "ghost" }),
+                  "size-12",
+                )}
+              >
                 <UserIcon />
-              </SheetTrigger>
-            </NavBaseBtn>
+              </Link>
+            </SheetTrigger>
             <SheetContent>
               <SheetHeader>
                 <SheetTitle>Account Settings</SheetTitle>
@@ -79,15 +86,6 @@ export default function SideNavbar() {
               </SheetHeader>
             </SheetContent>
           </Sheet>
-        </div>
-
-        <div className="flex flex-col space-y-6">
-          <button
-            className="flex items-center justify-center rounded-lg p-3 transition-all hover:bg-destructive hover:text-background"
-            onClick={handleLogoutButton}
-          >
-            <LogOutIcon />
-          </button>
         </div>
       </div>
     </nav>

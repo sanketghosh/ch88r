@@ -1,16 +1,16 @@
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { HomeIcon, PlusIcon, UserIcon } from "lucide-react";
@@ -18,22 +18,7 @@ import { Link } from "react-router-dom";
 import { Button, buttonVariants } from "../ui/button";
 
 export default function SideNavbar() {
-  // const navigate = useNavigate();
 
-  // const mutation = useMutation({
-  //   mutationFn: logoutUser.logoutUser,
-  //   onSuccess: async () => {
-  //     toast.success("Succesfully logged out user");
-  //     navigate("/auth");
-  //   },
-  //   onError: () => {
-  //     toast.error("Something went wrong.");
-  //   },
-  // });
-
-  // function handleLogoutButton() {
-  //   mutation.mutate();
-  // }
 
   return (
     <nav className="flex h-screen items-center justify-center border-r">

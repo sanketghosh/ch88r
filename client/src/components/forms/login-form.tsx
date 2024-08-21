@@ -49,7 +49,7 @@ export default function LoginForm() {
 
   const formSubmitHandler = (values: z.infer<typeof LoginSchema>) => {
     mutation.mutate(values);
-    console.log(values);
+    // console.log(values);
   };
 
   return (

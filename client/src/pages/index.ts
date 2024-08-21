@@ -1,7 +1,7 @@
-import Home from "./home";
+import Account from "./account";
 import Auth from "./auth";
 import ErrorPage from "./error";
+import Home from "./home";
 import SelectAvatar from "./select-avatar";
 
-
-export { Auth, Home, ErrorPage, SelectAvatar };
+export { Account, Auth, ErrorPage, Home, SelectAvatar };

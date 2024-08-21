@@ -1,7 +1,6 @@
+import ProtectedRoute from "@/components/protected/protected-route";
+import { Account, Auth, ErrorPage, Home } from "@/pages";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import ProtectedRoute from "./components/protected/protected-route";
-import { Auth, ErrorPage, Home } from "./pages";
-import Account from "./pages/account";
 
 export default function App() {
   return (

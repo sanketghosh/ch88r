@@ -37,3 +37,31 @@ export const LoginSchema = z.object({
     message: "Must be of atleast six characters.",
   }),
 });
+
+// UPDATE USER DETAILS (eg. username, email) SCHEMA
+export const UpdateUserDetailsSchema = z.object({
+  username: z
+    .string()
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      "Username can only contain letters, numbers, and underscores, without spaces",
+    )
+    .min(4, {
+      message: "Username of atleast four characters needed.",
+    })
+    .max(12, {
+      message: "Maximum twelve characters acceptable.",
+    }),
+  email: z.string().email({
+    message: "Not a valid email address.",
+  }),
+});
+
+export const UpdatePasswordSchema = z.object({
+  currentPassword: z.string().min(6, {
+    message: "Must be of atleast six characters.",
+  }),
+  newPassword: z.string().min(6, {
+    message: "Must be of atleast six characters.",
+  }),
+});

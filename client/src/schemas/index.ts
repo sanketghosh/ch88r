@@ -65,3 +65,15 @@ export const UpdatePasswordSchema = z.object({
     message: "Must be of atleast six characters.",
   }),
 });
+
+export const UpdateBioSchema = z.object({
+  userBio: z
+    .string()
+    .min(2, {
+      message: "At least 2 characters.",
+    })
+    .max(150, {
+      message: "Not more than 150 characters.",
+    })
+    .optional(),
+});

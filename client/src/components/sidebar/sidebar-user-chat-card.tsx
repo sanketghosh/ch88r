@@ -11,7 +11,7 @@ export default function SidebarUserChatCard({
 }: SidebarUserChatCardPropsTypes) {
   return (
     <div className="flex cursor-pointer select-none items-center gap-2 border-b object-cover px-3 py-2 hover:bg-muted">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-foreground md:h-16 md:w-16">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-foreground md:h-14 md:w-14">
         <img src={image} alt={username} className="" />
       </div>
       <div className="w-full">

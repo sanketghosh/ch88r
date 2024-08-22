@@ -10,17 +10,18 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { PenBoxIcon } from "lucide-react";
+import UpdateBio from "../forms/user-form/update-bio";
 
 export default function UpdateAccountDetails() {
   return (
     <Sheet>
       <SheetTrigger asChild className="mt-5">
-        <Button size={"lg"}>
+        <Button className="w-full rounded-full">
           Update Profile
           <PenBoxIcon size={18} className="ml-2" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="min-w-full md:min-w-[500px]">
+      <SheetContent className="min-w-full overflow-y-scroll md:min-w-[500px]">
         <SheetHeader>
           <SheetTitle>Update Profile</SheetTitle>
           <SheetDescription>
@@ -31,6 +32,8 @@ export default function UpdateAccountDetails() {
           <UpdateDetailsForm />
           <div className="h-[1px] bg-muted" />
           <UpdatePasswordForm />
+          <div className="h-[1px] bg-muted" />
+          <UpdateBio />
         </div>
       </SheetContent>
     </Sheet>

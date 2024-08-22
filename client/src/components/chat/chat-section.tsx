@@ -46,9 +46,9 @@ export default function ChatSection() {
               <p
                 className={cn(
                   msg.sender
-                    ? "rounded-lg rounded-bl-none text-left lg:rounded-xl lg:rounded-bl-none"
-                    : "rounded-lg rounded-br-none bg-secondary text-left text-foreground lg:rounded-xl lg:rounded-br-lg",
-                  "w-fit max-w-[95%] border p-3 md:max-w-[90%]",
+                    ? "rounded-lg rounded-bl-none bg-secondary/30 text-left lg:rounded-xl lg:rounded-bl-none"
+                    : "rounded-lg rounded-br-none bg-emerald-950 text-left text-foreground lg:rounded-xl lg:rounded-br-lg",
+                  "w-fit max-w-[95%] p-3 md:max-w-[90%]",
                 )}
               >
                 {msg.msg}

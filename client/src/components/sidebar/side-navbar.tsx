@@ -1,25 +1,24 @@
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
+
 import { cn } from "@/lib/utils";
 import { HomeIcon, PlusIcon, UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button, buttonVariants } from "../ui/button";
 
 export default function SideNavbar() {
-
-
   return (
     <nav className="flex h-screen items-center justify-center border-r">
       <div className="flex h-full w-full flex-col items-center justify-between px-2 py-6">
@@ -31,7 +30,7 @@ export default function SideNavbar() {
 
           {/* add/join with group/user */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="m-0 p-0">
+            <DropdownMenuTrigger className="m-0 p-0" asChild>
               <Button size={"icon"} variant={"outline"} className="size-12">
                 <PlusIcon />
               </Button>

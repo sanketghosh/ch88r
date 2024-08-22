@@ -1,4 +1,4 @@
-import { ArrowDownUp } from "lucide-react";
+import { ArrowDownUp, SearchIcon } from "lucide-react";
 import SidebarUserChatCard from "./sidebar-user-chat-card";
 
 export default function ChatSidebar() {
@@ -86,6 +86,17 @@ export default function ChatSidebar() {
           </button>
         </div>
         <div className="">
+          <div className="w-full border-b px-3 py-3">
+            <div className="flex w-full items-center space-x-2 rounded-full border border-border/30 bg-secondary/30 px-3 py-2">
+              <SearchIcon size={16} className="text-secondary" />
+              <input
+                type="text"
+                className="w-full border-none bg-transparent outline-none placeholder:text-secondary"
+                placeholder="Search"
+              />
+            </div>
+          </div>
+
           {fakeSidebarUserChatData.map((chat) => (
             <SidebarUserChatCard
               key={chat.username}

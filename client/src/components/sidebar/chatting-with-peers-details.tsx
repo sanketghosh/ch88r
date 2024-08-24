@@ -1,10 +1,10 @@
+import { Button } from "@/components/ui/button";
 import {
   BanIcon,
   HeartIcon,
   MessageSquareXIcon,
   TrashIcon,
 } from "lucide-react";
-import { Button } from "../ui/button";
 
 const isActive = {
   active: false,

@@ -1,9 +1,5 @@
 import * as registerUser from "@/actions/auth-actions/register-user";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import AuthCardWrapper from "../cards/auth-card-wrapper";
-
+import AuthCardWrapper from "@/components/cards/auth-card-wrapper";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,9 +10,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
 import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import * as z from "zod";
 
 export default function LoginForm() {

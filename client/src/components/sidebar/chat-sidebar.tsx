@@ -1,5 +1,5 @@
+import SidebarUserChatCard from "@/components/sidebar/sidebar-user-chat-card";
 import { ArrowDownUp, SearchIcon } from "lucide-react";
-import SidebarUserChatCard from "./sidebar-user-chat-card";
 
 export default function ChatSidebar() {
   const fakeSidebarUserChatData = [

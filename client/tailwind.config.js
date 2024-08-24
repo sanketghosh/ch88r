@@ -17,9 +17,9 @@ module.exports = {
       },
     },
     extend: {
-      /* fontFamily: {
-        bricolage: ["Bricolage Grotesque", "sans-serif"],
-      }, */
+      fontFamily: {
+        space_grotesk: ["Space Grotesk", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

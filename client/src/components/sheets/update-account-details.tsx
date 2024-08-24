@@ -1,3 +1,4 @@
+import UpdateBio from "@/components/forms/user-form/update-bio";
 import UpdateDetailsForm from "@/components/forms/user-form/update-details-form";
 import UpdatePasswordForm from "@/components/forms/user-form/update-password-form";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { PenBoxIcon } from "lucide-react";
-import UpdateBio from "../forms/user-form/update-bio";
 
 export default function UpdateAccountDetails() {
   return (

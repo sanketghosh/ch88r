@@ -1,6 +1,7 @@
+import ChatInput from "@/components/chat/chat-input";
+import ChatSectionTopbar from "@/components/chat/chat-section-topbar";
+
 import { cn } from "@/lib/utils";
-import ChatInput from "./chat-input";
-import ChatSectionTopbar from "./chat-section-topbar";
 
 const fake_msg_array = [
   {
@@ -27,6 +28,10 @@ const fake_msg_array = [
     msg: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, porro numquam inventore praesentium possimus eos pariatur voluptatum quasi repudiandae quis consectetur quisquam ut aspernatur harum quas officia alias nulla hic reprehenderit, at, assumenda error molestias corrupti. Dolor exercitationem sit corporis error mollitia, quisquam blanditiis laborum recusandae molestias pariatur possimus adipisci incidunt ea deserunt consequuntur, nostrum suscipit. Corrupti voluptates debitis cupiditate laudantium exercitationem odio nesciunt? Deleniti aliquam qui ab maiores error voluptatibus in quisquam magni exercitationem voluptate consequatur dolores pariatur officia fugit optio, excepturi quidem tempora quasi cum aperiam ducimus! Sunt doloremque ducimus nihil omnis ab vitae praesentium, laudantium voluptatibus esse?`,
     sender: false,
   },
+  {
+    msg: `hi`,
+    sender: false,
+  },
 ];
 
 export default function ChatSection() {
@@ -46,8 +51,8 @@ export default function ChatSection() {
               <p
                 className={cn(
                   msg.sender
-                    ? "rounded-lg rounded-bl-none bg-secondary/30 text-left lg:rounded-xl lg:rounded-bl-none"
-                    : "rounded-lg rounded-br-none bg-emerald-950 text-left text-foreground lg:rounded-xl lg:rounded-br-lg",
+                    ? "rounded-sm rounded-bl-none rounded-tr-md bg-secondary/30 text-left lg:rounded-md lg:rounded-bl-none lg:rounded-tr-xl"
+                    : "rounded-sm rounded-br-none rounded-tl-md bg-green-950 text-left text-foreground lg:rounded-md lg:rounded-br-none lg:rounded-tl-xl",
                   "w-fit max-w-[95%] p-3 md:max-w-[90%]",
                 )}
               >

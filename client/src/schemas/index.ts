@@ -77,3 +77,13 @@ export const UpdateBioSchema = z.object({
     })
     .optional(),
 });
+
+/*
+export const AddUserSchema = z.object({
+  addUser: z.string(),
+});
+
+export const CreateGroupSchema = z.object({
+  groupUserNames: z.string().array(),
+});
+*/

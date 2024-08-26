@@ -1,5 +1,6 @@
 import * as logoutUser from "@/actions/auth-actions/logout-user";
 import UpdateAccountDetails from "@/components/sheets/update-account-details";
+import { ModeToggle } from "@/components/special-buttons/mode-toggle";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuthContext } from "@/providers/auth-context-provider";
@@ -74,7 +75,12 @@ export default function Account() {
             Go back
             <MoveLeftIcon size={18} className="ml-2" />
           </Link>
-        </div>
+
+
+
+          <ModeToggle/>
+
+          </div>
       </div>
     </main>
   );

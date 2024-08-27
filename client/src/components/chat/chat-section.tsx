@@ -35,6 +35,10 @@ const fake_msg_array = [
 ];
 
 export default function ChatSection() {
+
+
+
+
   return (
     <section className="h-screen w-full">
       <div className=" flex h-full w-full flex-col justify-between">
@@ -52,7 +56,7 @@ export default function ChatSection() {
                 className={cn(
                   msg.sender
                     ? "rounded-sm rounded-bl-none rounded-tr-md bg-secondary/30 text-left lg:rounded-md lg:rounded-bl-none lg:rounded-tr-xl"
-                    : "rounded-sm rounded-br-none rounded-tl-md bg-green-950 text-left text-foreground lg:rounded-md lg:rounded-br-none lg:rounded-tl-xl",
+                    : "rounded-sm rounded-br-none rounded-tl-md bg-blue-800 dark:bg-blue-900 text-left text-white lg:rounded-md lg:rounded-br-none lg:rounded-tl-xl",
                   "w-fit max-w-[95%] p-3 md:max-w-[90%]",
                 )}
               >

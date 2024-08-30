@@ -1,40 +1,10 @@
 // components
 import ChatInput from "@/components/chat/chat-input";
 import ChatSectionTopbar from "@/components/chat/chat-section-topbar";
+import { fake_msg_array } from "@/data";
 import { useGetRandomHexColor } from "@/hooks/use-random-hex-color";
 import { cn } from "@/lib/utils";
 import LIcon from "../icons/L-icon";
-
-const fake_msg_array = [
-  {
-    msg: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, `,
-    sender: true,
-  },
-  {
-    msg: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, porro numquam inventore praesentium possimus eos pariatur voluptatum quasi repudiandae quis consectetur quisquam ut aspernatur harum quas officia alias nulla hic reprehenderit, at, assumenda error molestias corrupti. Dolor exercitationem sit corporis error mollitia, quisquam blanditiis laborum recusandae molestias pariatur possimus adipisci incidunt ea deserunt consequuntur, nostrum suscipit. Corrupti voluptates debitis cupiditate laudantium exercitationem odio nesciunt? Deleniti aliquam qui ab maiores error voluptatibus in quisquam magni exercitationem voluptate consequatur dolores pariatur officia fugit optio, excepturi quidem tempora quasi cum aperiam ducimus! Sunt doloremque ducimus nihil omnis ab vitae praesentium, laudantium voluptatibus esse?`,
-    sender: false,
-  },
-  {
-    msg: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, porro numquam inventore praesentium possimus eos pariatur voluptatum quasi repudiandae quis consectetur quisquam ut aspernatur harum quas officia alias nulla hic reprehenderit, at, assumenda error molestias corrupti. Dolor exercitationem sit corporis error mollitia, quisquam blanditiis laborum recusandae molestias pariatur possimus adipisci incidunt ea deserunt consequuntur, nostrum suscipit. Corrupti voluptates debitis cupiditate laudantium exercitationem odio nesciunt? Deleniti aliquam qui ab maiores error voluptatibus in quisquam magni exercitationem voluptate consequatur dolores pariatur officia fugit optio, excepturi quidem tempora quasi cum aperiam ducimus! Sunt doloremque ducimus nihil omnis ab vitae praesentium, laudantium voluptatibus esse?`,
-    sender: true,
-  },
-  {
-    msg: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, porro numquam inventore praesentium possimus eos pariatur voluptatum quasi repudiandae quis consectetur quisquam ut aspernatur harum quas officia alias nulla hic reprehenderit, at, assumenda error molestias corrupti. Dolor exercitationem sit corporis error mollitia, quisquam blanditiis laborum recusandae molestias pariatur possimus adipisci incidunt ea deserunt consequuntur, nostrum suscipit. Corrupti voluptates debitis cupiditate laudantium exercitationem odio nesciunt? Deleniti aliquam qui ab maiores error voluptatibus in quisquam magni exercitationem voluptate consequatur dolores pariatur officia fugit optio, excepturi quidem tempora quasi cum aperiam ducimus! Sunt doloremque ducimus nihil omnis ab vitae praesentium, laudantium voluptatibus esse?`,
-    sender: false,
-  },
-  {
-    msg: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, porro numquam inventore praesentium possimus eos pariatur voluptatum quasi repudiandae quis consectetur quisquam ut aspernatur harum quas officia alias nulla hic reprehenderit, at, assumenda error molestias corrupti. Dolor exercitationem sit corporis error mollitia, quisquam blanditiis laborum recusandae molestias pariatur possimus adipisci incidunt ea deserunt consequuntur, nostrum suscipit. Corrupti voluptates debitis cupiditate laudantium exercitationem odio nesciunt? Deleniti aliquam qui ab maiores error voluptatibus in quisquam magni exercitationem voluptate consequatur dolores pariatur officia fugit optio, excepturi quidem tempora quasi cum aperiam ducimus! Sunt doloremque ducimus nihil omnis ab vitae praesentium, laudantium voluptatibus esse?`,
-    sender: true,
-  },
-  {
-    msg: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, porro numquam inventore praesentium possimus eos pariatur voluptatum quasi repudiandae quis consectetur quisquam ut aspernatur harum quas officia alias nulla hic reprehenderit, at, assumenda error molestias corrupti. Dolor exercitationem sit corporis error mollitia, quisquam blanditiis laborum recusandae molestias pariatur possimus adipisci incidunt ea deserunt consequuntur, nostrum suscipit. Corrupti voluptates debitis cupiditate laudantium exercitationem odio nesciunt? Deleniti aliquam qui ab maiores error voluptatibus in quisquam magni exercitationem voluptate consequatur dolores pariatur officia fugit optio, excepturi quidem tempora quasi cum aperiam ducimus! Sunt doloremque ducimus nihil omnis ab vitae praesentium, laudantium voluptatibus esse?`,
-    sender: false,
-  },
-  {
-    msg: `hi`,
-    sender: false,
-  },
-];
 
 export default function ChatSection() {
   const { getRandomColor } = useGetRandomHexColor();
@@ -49,7 +19,7 @@ export default function ChatSection() {
               <img
                 src="./profile-pic1.svg"
                 alt=""
-                className="size-10 rounded-full bg-secondary"
+                className="size-8 rounded-full border-2 border-foreground/50 bg-secondary md:size-10"
               />
               <div className="flex flex-col">
                 <p

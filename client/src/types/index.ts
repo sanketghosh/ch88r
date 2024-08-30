@@ -5,3 +5,9 @@ export type User = {
   userAvatar: string | null;
   userCreatedAt: Date | string;
 };
+
+export type DataType = {
+  image: string;
+  username: string;
+  lastMessage: string;
+};

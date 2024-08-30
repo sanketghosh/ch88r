@@ -6,7 +6,7 @@
 <div align="center">
   <br />
     <a href="https://github.com/sanketghosh/ch88r" target="_blank">
-      <img src="./ch88r-demo.png" alt="Project Banner">
+      <img src="https://github.com/sanketghosh/ch88r/blob/main/client/public/ch88r-demo.png" alt="Project Banner">
     </a>
   <br />
 </div>

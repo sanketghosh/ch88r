@@ -58,31 +58,19 @@ At the core of Ch88r's real-time communication is SocketIO, a powerful library t
 
 ## <a name="features">Features</a>
 
-- `**Real-Time Messaging**: Utilizes SocketIO to provide instant, bidirectional communication for seamless one-on-one and group chats.
-
+- **Real-Time Messaging**: Utilizes SocketIO to provide instant, bidirectional communication for seamless one-on-one and group chats.
 - **One-on-One Chat**: Enables private conversations between users with real-time message delivery and notifications.
-
 - **Group Chat**: Supports multiple users in a single chat room, allowing for dynamic and interactive group discussions.
-
 - **User Authentication**: Built from scratch using Express and JWT, ensuring secure user authentication and session management.
-
 - **Type Safety**: Leveraging TypeScript to catch errors during development and provide a more reliable and maintainable codebase.
-
 - **Data Management**: Utilizes MySQL for robust relational data storage, with Prisma ORM simplifying data modeling and manipulation.
-
 - **Responsive Design**: Developed with Tailwind with Shadcn to supercharge the development process and deliver a smooth and adaptable user interface across various devices and screen sizes.
-
 - **Scalability**: Engineered for high scalability to handle growing user bases and increasing chat traffic efficiently.
-
 - **Security**: Incorporates industry-standard practices for securing user data and communications.
-
 - **Error Handling**: Comprehensive error handling mechanisms to ensure stability and a better user experience.
-
 - **Custom Notifications**: Supports real-time notifications and alerts for new messages and other important events.
-
 - **User Profiles**: Allows users to create and manage profiles, including setting display names and profile pictures.
-
-- **Search Functionality**: Includes search capabilities to easily find users and others.`
+- **Search Functionality**: Includes search capabilities to easily find users and others.
 
 ## <a name="quick-start">Quick Start</a>
 

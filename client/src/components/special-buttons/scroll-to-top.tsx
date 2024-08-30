@@ -1,11 +1,14 @@
 import { ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 type ScrollToTopButtonProps = {
   targetRef: React.RefObject<HTMLElement>;
 };
 
-export default function ScrollToTopButton({ targetRef }: ScrollToTopButtonProps) {
+export default function ScrollToTopButton({
+  targetRef,
+}: ScrollToTopButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {
@@ -33,12 +36,13 @@ export default function ScrollToTopButton({ targetRef }: ScrollToTopButtonProps)
 
   return (
     isVisible && (
-      <button
+      <Button
         onClick={scrollToTop}
-        className="absolute bottom-0 right-5 p-2 bg-foreground text-background rounded-full shadow-lg"
+        className="sticky bottom-20 left-[22rem] z-10"
+        size={"icon"}
       >
         <ArrowUp size={24} />
-      </button>
+      </Button>
     )
   );
 }

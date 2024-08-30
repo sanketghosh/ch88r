@@ -1,10 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  BanIcon,
-  HeartIcon,
-  MessageSquareXIcon,
-  TrashIcon,
-} from "lucide-react";
+import { BanIcon, HeartIcon, MessageSquareXIcon } from "lucide-react";
 
 const isActive = {
   active: false,
@@ -38,17 +33,13 @@ export default function ChattingWithPeersDetails() {
             Add To Favorites
             <HeartIcon className="ml-2 size-4" />
           </Button>
-          <Button className="rounded-full" variant={"outline"}>
+          <Button className="rounded-full" variant={"secondary"}>
             Clear Chats
             <MessageSquareXIcon className="ml-2 size-4" />
           </Button>
-          <Button className="rounded-full" variant={"secondary"}>
+          <Button className="rounded-full" variant={"destructive"}>
             Block User
             <BanIcon className="ml-2 size-4" />
-          </Button>
-          <Button className="rounded-full" variant={"destructive"}>
-            Delete User
-            <TrashIcon className="ml-2 size-4" />
           </Button>
         </div>
       </div>

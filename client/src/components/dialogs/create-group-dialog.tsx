@@ -1,6 +1,5 @@
 import DialogWrapper from "@/components/dialogs/dialog-wrapper";
 import GroupAddIcon from "@/components/icons/add-group";
-import { Button } from "@/components/ui/button";
 import {
   MultiSelector,
   MultiSelectorContent,
@@ -18,14 +17,13 @@ export default function CreateGroupDialog() {
 
   return (
     <>
-      <Button
-        size={"icon"}
-        variant={"ghost"}
-        className="size-12"
+      <button
+        className="flex w-full items-center rounded-md px-2 py-2 text-sm font-medium hover:bg-secondary/30"
         onClick={onOpen}
       >
-        <GroupAddIcon className="size-6" />
-      </Button>
+        <GroupAddIcon className="mr-2 size-4" />
+        Create Group
+      </button>
 
       <DialogWrapper
         onModalClose={onClose}

@@ -18,7 +18,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        space_grotesk: ["Space Grotesk", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

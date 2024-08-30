@@ -1,5 +1,4 @@
 import DialogWrapper from "@/components/dialogs/dialog-wrapper";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import useAddUserModal from "@/hooks/use-add-user-modal";
@@ -10,14 +9,13 @@ export default function AddUserDialog() {
 
   return (
     <>
-      <Button
-        size={"icon"}
-        variant={"ghost"}
-        className="size-12"
+      <button
+        className="flex w-full items-center rounded-md px-2 py-2 text-sm font-medium hover:bg-secondary/30"
         onClick={onOpen}
       >
-        <UserPlusIcon />
-      </Button>
+        <UserPlusIcon size={16} className="mr-2" />
+        Add User
+      </button>
 
       <DialogWrapper
         onModalClose={onClose}

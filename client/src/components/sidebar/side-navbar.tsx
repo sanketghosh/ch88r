@@ -1,10 +1,8 @@
-import AddUserDialog from "@/components/dialogs/add-user-dialog";
-import CreateGroupDialog from "@/components/dialogs/create-group-dialog";
 import HomeIcon from "@/components/icons/home-icon";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
-import { BellIcon, UserIcon } from "lucide-react";
+import { UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function SideNavbar() {
@@ -15,14 +13,6 @@ export default function SideNavbar() {
           {/* home icon */}
           <Button size={"icon"} variant={"secondary"} className="size-12">
             <HomeIcon className="size-5" />
-          </Button>
-        </div>
-
-        <div className="flex flex-col items-center space-y-5">
-          <AddUserDialog />
-          <CreateGroupDialog />
-          <Button size={"icon"} variant={"ghost"} className="size-12">
-            <BellIcon />
           </Button>
         </div>
 

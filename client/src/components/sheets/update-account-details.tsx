@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { PenBoxIcon } from "lucide-react";
+import { PenBoxIcon, UserIcon } from "lucide-react";
 
 export default function UpdateAccountDetails() {
   return (
@@ -23,7 +23,10 @@ export default function UpdateAccountDetails() {
       </SheetTrigger>
       <SheetContent className="min-w-full overflow-y-scroll md:min-w-[500px]">
         <SheetHeader>
-          <SheetTitle>Update Profile</SheetTitle>
+          <SheetTitle className="flex items-center gap-1">
+            <UserIcon size={20} className="fill-foreground" />
+            Update Profile
+          </SheetTitle>
           <SheetDescription>
             You can change or update your username, email and password here.
           </SheetDescription>

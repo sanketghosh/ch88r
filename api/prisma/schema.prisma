@@ -44,11 +44,14 @@ model Conversation {
   isGroup  Boolean
   lastSeen DateTime?
 
+  latestMessage   Message? @relation("LatestMessage", fields: [latestMessageId], references: [id])
+  latestMessageId String?  @unique
+
   group   Group?  @relation("GroupConversation")
   groupId String?
 
   users    User[]    @relation("UserConversations")
-  messages Message[]
+  messages Message[] @relation("ConversationMessage")
 
   favorites FavoriteConversation[]
 
@@ -79,11 +82,15 @@ model Message {
   content String?
   fileUrl String?
 
-  createdAt      DateTime     @default(now())
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  createdAt DateTime @default(now())
+
+  conversation   Conversation @relation("ConversationMessage", fields: [conversationId], references: [id])
   conversationId String
-  senderId       String
-  sender         User         @relation(fields: [senderId], references: [id])
+
+  senderId String
+  sender   User   @relation(fields: [senderId], references: [id])
+
+  latestInConversation Conversation? @relation("LatestMessage")
 
   @@map("messages")
 }

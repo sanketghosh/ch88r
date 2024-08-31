@@ -3,10 +3,16 @@ import SidebarUserChatCard from "@/components/sidebar/sidebar-user-chat-card";
 import ScrollToTopButton from "@/components/special-buttons/scroll-to-top";
 
 import { fakeSidebarUserChatData } from "@/data";
-import { PlusCircleIcon, SearchIcon, XIcon } from "lucide-react";
+import {
+  ArchiveIcon,
+  MessageCirclePlusIcon,
+  SearchIcon,
+  XIcon,
+} from "lucide-react";
 import { useRef, useState } from "react";
 import AddUserDialog from "../dialogs/add-user-dialog";
 import CreateGroupDialog from "../dialogs/create-group-dialog";
+import NotificationsSheet from "../sheets/notifications";
 import { Button } from "../ui/button";
 
 export default function ChatSidebar() {
@@ -27,13 +33,20 @@ export default function ChatSidebar() {
 
   return (
     <div
-      className="relative h-screen w-96 shrink-0 overflow-y-auto border-r xl:w-[27rem]"
+      className="relative h-screen w-full shrink-0 overflow-y-auto border-r md:w-96 xl:w-[27rem]"
       ref={sidebarRef}
     >
       <div className="">
-        <div className="sticky top-0 flex items-center justify-between border-b bg-background px-3 py-5">
+        <div className="sticky top-0 flex items-center justify-between bg-background px-3 py-5">
           <h1 className="text-2xl font-semibold">Chats</h1>
-          <div>
+          <div className="flex items-center gap-4">
+            <NotificationsSheet />
+            <Button size={"icon"} variant={"ghost"} className="relative">
+              <span className="absolute -right-1 -top-1 rounded-full bg-red-600 p-1 text-xs font-medium">
+                9+
+              </span>
+              <ArchiveIcon size={22} />
+            </Button>
             <AddConverstationDropdown />
           </div>
         </div>
@@ -74,21 +87,22 @@ function AddConverstationDropdown() {
   }
 
   return (
-    <div className="relative">
-      <Button
-        size={"icon"}
-        variant={"secondary"}
-        onClick={handleToggleDropdown}
-      >
-        {!toggleDropdown ? <PlusCircleIcon /> : <XIcon />}
-      </Button>
-
-      {toggleDropdown && (
-        <div className="absolute right-3 top-12 z-20 w-40 rounded-md border bg-background p-1">
-          <AddUserDialog />
-          <CreateGroupDialog />
-        </div>
-      )}
-    </div>
+    <>
+      <div className="relative">
+        <Button onClick={handleToggleDropdown} size={"icon"} variant={"ghost"}>
+          {!toggleDropdown ? (
+            <MessageCirclePlusIcon size={22} />
+          ) : (
+            <XIcon size={22} />
+          )}
+        </Button>
+        {toggleDropdown && (
+          <div className="absolute right-1 top-12 z-20 w-40 rounded-md border bg-background p-1">
+            <AddUserDialog />
+            <CreateGroupDialog />
+          </div>
+        )}
+      </div>
+    </>
   );
 }

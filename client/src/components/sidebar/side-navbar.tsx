@@ -1,18 +1,17 @@
-import HomeIcon from "@/components/icons/home-icon";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
-import { UserIcon } from "lucide-react";
+import { MessageSquareIcon, UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function SideNavbar() {
   return (
-    <nav className="flex h-screen items-center justify-center border-r">
+    <nav className="hidden h-screen items-center justify-center border-r md:flex">
       <div className="flex h-full w-full flex-col items-center justify-between px-2 py-6">
-        <div className="flex w-full flex-col items-center">
+        <div className="flex w-full flex-col items-center gap-3">
           {/* home icon */}
           <Button size={"icon"} variant={"secondary"} className="size-12">
-            <HomeIcon className="size-5" />
+            <MessageSquareIcon className="size-5" />
           </Button>
         </div>
 
@@ -21,7 +20,7 @@ export default function SideNavbar() {
           <Link
             to={"/account"}
             className={cn(
-              buttonVariants({ size: "icon", variant: "secondary" }),
+              buttonVariants({ size: "icon", variant: "outline" }),
               "size-12",
             )}
           >

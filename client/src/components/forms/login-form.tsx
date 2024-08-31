@@ -52,6 +52,21 @@ export default function LoginForm() {
     // console.log(values);
   };
 
+  // handles auto filling fields with guest user details
+  function handleAddGuest() {
+    const values = form.getValues();
+
+    if (values.email || values.password) {
+      toast.warning("WARNING! Fields are already filled");
+    } else {
+      form.reset({
+        email: "guest@mail.com",
+        password: "123456",
+      });
+      toast.success("SUCCESS! Guest credentials have been added.");
+    }
+  }
+
   return (
     <AuthCardWrapper
       title="Welcome Back!"
@@ -99,6 +114,14 @@ export default function LoginForm() {
             />
           </div>
           <Button className="mt-4 w-full">Login</Button>
+          <Button
+            type="button"
+            className="mt-4 w-full"
+            variant={"secondary"}
+            onClick={handleAddGuest}
+          >
+            Guest Credentials
+          </Button>
         </form>
       </Form>
     </AuthCardWrapper>

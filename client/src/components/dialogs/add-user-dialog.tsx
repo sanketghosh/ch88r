@@ -1,11 +1,25 @@
+import SearchUserCards from "@/components/cards/search-user-card";
 import DialogWrapper from "@/components/dialogs/dialog-wrapper";
 import { Input } from "@/components/ui/input";
 
+import * as fetchAllUsers from "@/actions/users-actions/fetch-all-users";
 import useAddUserModal from "@/hooks/use-add-user-modal";
-import { SearchIcon, UserPlusIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { FrownIcon, Loader2Icon, UserPlusIcon } from "lucide-react";
+
+type UserType = {
+  image: string;
+  username: string;
+  email: string;
+};
 
 export default function AddUserDialog() {
   const { isOpen, onOpen, onClose } = useAddUserModal();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["fetchedUsersData"],
+    queryFn: fetchAllUsers.fetchAllUsers,
+  });
 
   return (
     <>
@@ -24,16 +38,49 @@ export default function AddUserDialog() {
         dialogDescription="Search user by username or email and add one."
       >
         <Input placeholder="Enter username you wanna chat with." />
-        <div className="min-h-72 rounded-md border p-4">
-          <div className="flex h-full w-full flex-col items-center justify-center space-y-5 text-center text-muted-foreground/50">
-            <SearchIcon size={50} />
-            <p className="text-sm">
-              All the users who have created an account on ch88r is available
-              here. Try to find them with username.
-            </p>
-          </div>
+        <div className="max-h-72 min-h-72 overflow-y-scroll rounded-md border bg-secondary/30 p-4">
+          {isLoading && (
+            <NotUsersScreen
+              icon={<Loader2Icon size={30} className="animate-spin" />}
+              text="Loading..."
+            />
+          )}
+          {error && (
+            <NotUsersScreen
+              icon={<FrownIcon size={30} />}
+              text={error.message}
+            />
+          )}
+
+          {data?.users && data.users.length > 0 ? (
+            <div className="space-y-2">
+              {data.users.map((user: UserType) => (
+                <SearchUserCards
+                  key={user.email + user.username}
+                  email={user.email}
+                  username={user.username}
+                />
+              ))}
+            </div>
+          ) : (
+            <NotUsersScreen icon={<FrownIcon />} text="No users found." />
+          )}
         </div>
       </DialogWrapper>
     </>
+  );
+}
+
+type NotUserScreenProps = {
+  icon: React.ReactElement;
+  text?: string;
+};
+
+function NotUsersScreen({ icon, text }: NotUserScreenProps) {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-2">
+      {icon}
+      <p>{text}</p>
+    </div>
   );
 }

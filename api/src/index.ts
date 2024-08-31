@@ -3,7 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 
-import { authRoutes } from "./routes";
+import { authRoutes, userRotes } from "./routes";
 
 // port
 const PORT = process.env.PORT || 8000;
@@ -23,6 +23,7 @@ app.use(
 );
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRotes);
 
 app.listen(PORT, () => {
   console.log(`SUCCESS: app listening on http://localhost:${PORT}`);

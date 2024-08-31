@@ -10,8 +10,8 @@ import {
   XIcon,
 } from "lucide-react";
 import { useRef, useState } from "react";
-import AddUserDialog from "../dialogs/add-user-dialog";
 import CreateGroupDialog from "../dialogs/create-group-dialog";
+import SearchUsers from "../dialogs/search-users";
 import NotificationsSheet from "../sheets/notifications";
 import { Button } from "../ui/button";
 
@@ -98,7 +98,7 @@ function AddConverstationDropdown() {
         </Button>
         {toggleDropdown && (
           <div className="absolute right-1 top-12 z-20 w-40 rounded-md border bg-background p-1">
-            <AddUserDialog />
+            <SearchUsers />
             <CreateGroupDialog />
           </div>
         )}
@@ -106,3 +106,5 @@ function AddConverstationDropdown() {
     </>
   );
 }
+
+// <AddUserDialog />

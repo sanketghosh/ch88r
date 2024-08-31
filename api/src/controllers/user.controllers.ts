@@ -32,3 +32,55 @@ export const getAllUsersHandlers = async (req: Request, res: Response) => {
     console.error("Error fetching users:", error);
   }
 };
+
+export const searchUsersHandler = async (req: Request, res: Response) => {
+  const { searchQ } = req.query;
+  const userId = req.userId;
+
+  if (!searchQ) {
+    return res.status(400).json({
+      message: "ERROR! Search query is required.",
+    });
+  }
+
+  try {
+    const users = await db.user.findMany({
+      where: {
+        AND: [
+          {
+            id: {
+              not: userId,
+            },
+          },
+          {
+            OR: [
+              {
+                username: {
+                  contains: searchQ as string,
+                  // mode: "insensitive",
+                },
+              },
+              {
+                email: {
+                  contains: searchQ as string,
+                  // mode: "insensitive",
+                },
+              },
+            ],
+          },
+        ],
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        avatar: true,
+        userAbout: true,
+      },
+    });
+    res.status(200).json({
+      users: users,
+      message: "Fetched users you are searching for.",
+    });
+  } catch (error) {}
+};

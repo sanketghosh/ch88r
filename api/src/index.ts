@@ -3,7 +3,14 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 
-import { authRoutes, userRotes } from "./routes";
+// imported routes
+import {
+  authRoutes,
+  conversationOfUserRoutes,
+  groupConversationRoutes,
+  oneToOneConversationRoutes,
+  userRotes,
+} from "./routes";
 
 // port
 const PORT = process.env.PORT || 8000;
@@ -22,9 +29,14 @@ app.use(
   }),
 );
 
+// routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRotes);
+app.use("/api/v1/group-conversation", groupConversationRoutes);
+app.use("/api/v1/one-to-one-conversation", oneToOneConversationRoutes);
+app.use("/api/v1/conversations", conversationOfUserRoutes);
 
+// app listener
 app.listen(PORT, () => {
   console.log(`SUCCESS: app listening on http://localhost:${PORT}`);
 });

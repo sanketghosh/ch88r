@@ -9,7 +9,7 @@ export const RegisterSchema = z
         /^[a-zA-Z0-9_]+$/,
         "Username can only contain letters, numbers, and underscores, without spaces",
       )
-      .min(4, {
+      .min(1, {
         message: "Username of atleast four characters needed.",
       })
       .max(12, {

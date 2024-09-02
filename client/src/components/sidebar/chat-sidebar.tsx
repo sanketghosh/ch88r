@@ -3,6 +3,7 @@ import SidebarUserChatCard from "@/components/sidebar/sidebar-user-chat-card";
 import ScrollToTopButton from "@/components/special-buttons/scroll-to-top";
 
 import { fakeSidebarUserChatData } from "@/data";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArchiveIcon,
   MessageCirclePlusIcon,
@@ -15,9 +16,16 @@ import SearchUsers from "../dialogs/search-users";
 import NotificationsSheet from "../sheets/notifications";
 import { Button } from "../ui/button";
 
+import * as getLoggedInUserChats from "@/actions/chat-actions/get-loggedin-user-chats";
+
 export default function ChatSidebar() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const { data } = useQuery({
+    queryKey: ["fetchChatsWithLoggedUser"],
+    queryFn: getLoggedInUserChats.getLoggedInUserChats,
+  });
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;

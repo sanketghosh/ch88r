@@ -6,7 +6,7 @@ import {
   leaveGroupHandler,
   renameGroupHandler,
   startGroupConversationHandler,
-} from "../../controllers/controllers/group-conversations.controllers";
+} from "../../controllers/conversations/group-conversations.controllers";
 import { verifyTokenHandler } from "../../middleware/verify-token.middleware";
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.put("/rename-group", verifyTokenHandler, renameGroupHandler);
 router.put(
   "/edit-group-description",
   verifyTokenHandler,
-  editGroupDescriptionHandler,
+  editGroupDescriptionHandler
 );
 
 // add user to group

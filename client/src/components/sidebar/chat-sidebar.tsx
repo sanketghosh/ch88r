@@ -1,7 +1,4 @@
-// COMPONENTS
-import SidebarUserChatCard from "@/components/sidebar/sidebar-user-chat-card";
-import ScrollToTopButton from "@/components/special-buttons/scroll-to-top";
-
+// PACKAGES
 import { fakeSidebarUserChatData } from "@/data";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -11,21 +8,52 @@ import {
   XIcon,
 } from "lucide-react";
 import { useRef, useState } from "react";
-import CreateGroupDialog from "../dialogs/create-group-dialog";
-import SearchUsers from "../dialogs/search-users";
-import NotificationsSheet from "../sheets/notifications";
-import { Button } from "../ui/button";
-
 import * as getLoggedInUserChats from "@/actions/chat-actions/get-loggedin-user-chats";
 
+// COMPONENTS
+import SidebarUserChatCard from "@/components/sidebar/sidebar-user-chat-card";
+import ScrollToTopButton from "@/components/special-buttons/scroll-to-top";
+import CreateGroupDialog from "@/components/dialogs/create-group-dialog";
+import SearchUsers from "@/components/dialogs/search-users";
+import NotificationsSheet from "@/components/sheets/notifications";
+import { Button } from "@/components/ui/button";
+import { useAuthContext } from "@/providers/auth-context-provider";
+
+type Conversation = {
+  id: string;
+  lastMessage: string;
+  updatedAt: Date;
+  users: User[];
+};
+
+type User = {
+  id: string;
+  username: string;
+  avatar: string;
+};
+
 export default function ChatSidebar() {
+  const { user } = useAuthContext();
+
   const [searchTerm, setSearchTerm] = useState<string>("");
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const { data } = useQuery({
-    queryKey: ["fetchChatsWithLoggedUser"],
+    queryKey: ["fetch-chats-with-logged-user"],
     queryFn: getLoggedInUserChats.getLoggedInUserChats,
+    staleTime: 5000,
   });
+
+  console.log(data);
+
+  // data?.map((d) => {
+  //   /* return d.users.filter((u) => {
+  //     if (u.username !== user?.userUsername) {
+  //       console.log(u.username);
+  //     }
+  //   }); */
+  //   console.log(d);
+  // });
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;
@@ -59,25 +87,52 @@ export default function ChatSidebar() {
           </div>
         </div>
         <div className="">
-          <div className="w-full border-b px-3 py-3">
-            <div className="mb-2 flex w-full items-center space-x-2 rounded-full border border-border/30 bg-secondary/30 px-3 py-2">
-              <SearchIcon size={16} className="text-secondary" />
-              <input
-                type="text"
-                className="w-full border-none bg-transparent outline-none placeholder:text-secondary"
-                placeholder="Search"
-                onChange={handleSearch}
-              />
+          <div className="w-full py-4">
+            <div className="px-3 pb-3">
+              <div className="flex w-full items-center space-x-2 rounded-full border border-border/30 bg-secondary/30 px-3 py-2">
+                <SearchIcon size={16} className="text-secondary" />
+                <input
+                  type="text"
+                  className="w-full border-none bg-transparent outline-none placeholder:text-secondary"
+                  placeholder="Search"
+                  onChange={handleSearch}
+                />
+              </div>
             </div>
 
-            {filteredItems.map((chat, idx) => (
+            {/*  {filteredItems.map((chat, idx) => (
               <SidebarUserChatCard
                 key={chat.username + idx}
                 username={chat.username.toLowerCase()}
                 lastMessage={chat.lastMessage}
                 image={chat.image}
+                lastMessageTime=""
               />
-            ))}
+            ))} */}
+            <div className="border-t">
+              {data?.map((conversation: Conversation) => (
+                <div key={conversation.id}>
+                  <div>
+                    {conversation.users.map((u: User) =>
+                      u.id !== user?.userId ? (
+                        <SidebarUserChatCard
+                          key={u.username + u.id}
+                          username={u.username.toLowerCase()}
+                          lastMessage={
+                            conversation.lastMessage ||
+                            "This is just a placeholder for last message. Will add real one after real-time feature is done."
+                          }
+                          lastMessageTime={conversation.updatedAt}
+                          image={u.avatar || "profile-pic1.svg"}
+                        />
+                      ) : null,
+                    )}
+                  </div>
+                  {/*   <p>{conversation.latestMessage}</p>
+                <p>{new Date(conversation.updatedAt).toLocaleString()}</p> */}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

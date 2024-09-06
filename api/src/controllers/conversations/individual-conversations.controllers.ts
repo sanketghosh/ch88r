@@ -1,9 +1,9 @@
 import { type Request, type Response } from "express";
 import { db } from "../../lib/prisma";
 
-export const startOneToOneConversationHandler = async (
+export const startIndividualConversationHandler = async (
   req: Request,
-  res: Response,
+  res: Response
 ) => {
   const { participantId } = req.body;
   const userId = req.userId;

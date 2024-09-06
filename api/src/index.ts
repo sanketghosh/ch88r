@@ -8,7 +8,7 @@ import {
   authRoutes,
   conversationOfUserRoutes,
   groupConversationRoutes,
-  oneToOneConversationRoutes,
+  individualConversationRoutes,
   userRotes,
 } from "./routes";
 
@@ -26,14 +26,14 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-  }),
+  })
 );
 
 // routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRotes);
 app.use("/api/v1/group-conversation", groupConversationRoutes);
-app.use("/api/v1/one-to-one-conversation", oneToOneConversationRoutes);
+app.use("/api/v1/individual-conversation", individualConversationRoutes);
 app.use("/api/v1/conversations", conversationOfUserRoutes);
 
 // app listener

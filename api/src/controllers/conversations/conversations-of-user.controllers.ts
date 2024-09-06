@@ -3,7 +3,7 @@ import { db } from "../../lib/prisma";
 
 export const getAllConversationsOfAUserHandler = async (
   req: Request,
-  res: Response,
+  res: Response
 ) => {
   const userId = req.userId;
 
@@ -14,7 +14,7 @@ export const getAllConversationsOfAUserHandler = async (
   }
 
   try {
-    const conversations = await db.conversation.findMany({
+    /*  const conversations = await db.conversation.findMany({
       where: {
         users: {
           some: {
@@ -46,7 +46,84 @@ export const getAllConversationsOfAUserHandler = async (
           },
         },
       },
+    }); */
+
+    // get group conversation and individual conversations together
+    const conversations = await db.conversation.findMany({
+      where: {
+        OR: [
+          {
+            isGroup: false,
+            users: {
+              some: {
+                id: userId,
+              },
+            },
+          },
+          {
+            isGroup: true,
+            group: {
+              users: {
+                some: {
+                  id: userId,
+                },
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        users: {
+          select: {
+            id: true,
+            username: true,
+            userAbout: true,
+            email: true,
+            avatar: true,
+          },
+        },
+
+        group: {
+          select: {
+            id: true,
+            name: true,
+            groupDescription: true,
+            users: {
+              select: {
+                id: true,
+                username: true,
+                email: true,
+                avatar: true,
+              },
+            },
+            admin: {
+              select: {
+                id: true,
+                username: true,
+              },
+            },
+          },
+        },
+
+        latestMessage: {
+          include: {
+            sender: {
+              select: {
+                id: true,
+                username: true,
+                userAbout: true,
+                email: true,
+                avatar: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
+
     res.status(200).json({
       conversations: conversations,
       message: "SUCCESS! Fetched all conversations.",

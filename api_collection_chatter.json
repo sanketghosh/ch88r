@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "chatter",
     "collectionId": "9952594d-ee57-4f90-a888-0e3760641235",
-    "dateExported": "2024-09-06T17:03:55.869Z",
+    "dateExported": "2024-09-06T21:25:18.000Z",
     "version": "1.2",
     "folders": [
         {
@@ -32,6 +32,13 @@
             "containerId": "",
             "created": "2024-09-06T16:03:44.592Z",
             "sortNum": 40000
+        },
+        {
+            "_id": "d1df6921-8497-4eb1-bf8e-ec623bbb412d",
+            "name": "group-convos",
+            "containerId": "1ae4c4c8-e235-41f2-8e1a-7e35e79e9ad8",
+            "created": "2024-09-06T20:02:16.892Z",
+            "sortNum": 50000
         }
     ],
     "requests": [
@@ -109,7 +116,24 @@
             "created": "2024-09-06T16:03:52.275Z",
             "modified": "2024-09-06T16:04:44.828Z",
             "headers": []
+        },
+        {
+            "_id": "b8712919-3ce2-4549-960a-763b377b94d5",
+            "colId": "9952594d-ee57-4f90-a888-0e3760641235",
+            "containerId": "d1df6921-8497-4eb1-bf8e-ec623bbb412d",
+            "name": "start-group-convos",
+            "url": "http://localhost:8000/api/v1/group-conversation",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-09-06T20:02:27.875Z",
+            "modified": "2024-09-06T20:04:58.521Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"groupName\":\"Friends Group\",\n  \"groupDescription\":\"This is a group for friends\",\n  \"userIds\":[\n  \"cm0qi7duf0005118p3wfuchcj\",\n  \"cm0qi706h0004118pbmfsddpw\"\n  ]\n}",
+                "form": []
+            }
         }
     ],
-    "ref": "iZpwaOgSrFp3Qx1RxQ8Zwd9a1KcKMP8Ka48gLsVGpEPDXn-P6AgHx8z8eGJtU9ql70w8vYTt9Q8miDhlq2L8bg"
+    "ref": "iZpwaOgSrFp3Qx1RxQ8ZwZJsNWJXLPWRvATmeux4KQXqZMArDlNGMirmaTo9-baYgXhdjSWPpXd9Qjq51iesWw"
 }

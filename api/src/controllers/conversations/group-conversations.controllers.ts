@@ -2,12 +2,27 @@ import { type Request, type Response } from "express";
 import { db } from "../../lib/prisma";
 
 /**
- *
- * @param req
- * @param res
- * @returns
+ * @function startGroupConversationHandler
+ * @async
+ * @param {Request} req - The HTTP request object containing the group details such as groupName. groupDescription, userIds and user IDs
+ * @param res - The HTTP response object used to send back the desired HTTP response
+ * @returns {Promise<void>} A promise that resolves when the group conversation is created or rejects with an error.
  * @description
+ * This handler is responsible for initiating a group conversation in the application.
+ * It validates the input data, ensures the admin user is included in the group,
+ * and creates both a new group and a conversation atomically using a database transaction
+ *
+ * The following validations are performed:
+ * - The admin user must be authenticated
+ * - The group name and description must be provided
+ * - The number of user IDs must not exceed two (including the admin)
+ *
+ *
+ * On successful creation, it responds with a status code of 201 and includes the created group and conversation details in the response body. In case of any errors during the process it responds with appropriate error messages and status codes.
+ *
+ * @throws {Error} Throws an error if the database transaction fails or if input validation fails.
  */
+
 export const startGroupConversationHandler = async (
   req: Request,
   res: Response

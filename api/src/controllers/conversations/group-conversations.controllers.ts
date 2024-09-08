@@ -116,28 +116,57 @@ export const startGroupConversationHandler = async (
  * @description
  */
 
-export const renameGroupHandler = async (req: Request, res: Response) => {
-  try {
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "ERROR! Something went wrong, internal server error.",
-    });
-  }
-};
-
-/**
- *
- * @param req
- * @param res
- * @returns
- * @description
- */
-export const editGroupDescriptionHandler = async (
+export const updateGroupDetailsHandler = async (
   req: Request,
   res: Response
 ) => {
+  const { groupId } = req.params;
+  const { groupName, groupDescription } = req.body;
+  const userId = req.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      message: "ERROR! User not authenticated.",
+    });
+  }
+
+  if (!groupName && !groupDescription) {
+    return res.status(400).json({
+      message:
+        "ERROR! You must provide at least a group name or description to update.",
+    });
+  }
+
   try {
+    const group = await db.group.findUnique({
+      where: {
+        id: groupId,
+      },
+    });
+
+    if (!group) {
+      return res.status(404).json({
+        message: "ERROR! Group not found.",
+      });
+    }
+
+    const updatedGroup = await db.group.update({
+      where: {
+        id: groupId,
+      },
+      data: {
+        ...(groupName && { name: groupName }),
+        ...(groupDescription && { groupDescription: groupDescription }),
+      },
+      include: {
+        users: true,
+      },
+    });
+
+    return res.status(200).json({
+      message: "SUCCESS! Group updated successfully.",
+      group: updatedGroup,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({

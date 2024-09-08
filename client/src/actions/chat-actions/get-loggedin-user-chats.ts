@@ -13,6 +13,7 @@ export const getLoggedInUserChats = async () => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    console.log(data);
     return data.conversations || [];
   } catch (error) {
     console.error("Fetch all chats failed:", error);

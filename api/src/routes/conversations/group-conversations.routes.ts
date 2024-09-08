@@ -1,11 +1,10 @@
 import express from "express";
 import {
   addUserToGroupHandler,
-  editGroupDescriptionHandler,
   kickUserHandler,
   leaveGroupHandler,
-  renameGroupHandler,
   startGroupConversationHandler,
+  updateGroupDetailsHandler,
 } from "../../controllers/conversations/group-conversations.controllers";
 import { verifyTokenHandler } from "../../middleware/verify-token.middleware";
 
@@ -15,13 +14,10 @@ const router = express.Router();
 router.post("/", verifyTokenHandler, startGroupConversationHandler);
 
 // rename group
-router.put("/rename-group", verifyTokenHandler, renameGroupHandler);
-
-// edit group about
 router.put(
-  "/edit-group-description",
+  "/update-group-details",
   verifyTokenHandler,
-  editGroupDescriptionHandler
+  updateGroupDetailsHandler
 );
 
 // add user to group

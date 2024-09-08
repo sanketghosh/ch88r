@@ -1,8 +1,8 @@
 // PACKAGES
-import { fakeSidebarUserChatData } from "@/data";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArchiveIcon,
+  Loader2Icon,
   MessageCirclePlusIcon,
   SearchIcon,
   XIcon,
@@ -19,11 +19,22 @@ import NotificationsSheet from "@/components/sheets/notifications";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/providers/auth-context-provider";
 
+// IMAGES
+import placeholderUserDp from "../../images/placeholder-user-dp.svg";
+import placeholderGroupDp from "../../images/placeholder-group-dp.svg";
+import { Skeleton } from "../ui/skeleton";
+
+// TYPES
 type Conversation = {
   id: string;
   lastMessage: string;
   updatedAt: Date;
   users: User[];
+  isGroup: boolean;
+  group?: {
+    name: string;
+    groupDescription?: string;
+  };
 };
 
 type User = {
@@ -38,7 +49,7 @@ export default function ChatSidebar() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  const { data } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["fetch-chats-with-logged-user"],
     queryFn: getLoggedInUserChats.getLoggedInUserChats,
     staleTime: 5000,
@@ -46,26 +57,38 @@ export default function ChatSidebar() {
 
   console.log(data);
 
-  // data?.map((d) => {
-  //   /* return d.users.filter((u) => {
-  //     if (u.username !== user?.userUsername) {
-  //       console.log(u.username);
-  //     }
-  //   }); */
-  //   console.log(d);
-  // });
-
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;
     setSearchTerm(newSearchTerm);
   };
 
   // Use the original data for filtering
-  const filteredItems = searchTerm
+  /*  const filteredItems = searchTerm
     ? fakeSidebarUserChatData.filter((item) =>
         item.username.toLowerCase().includes(searchTerm.toLowerCase()),
       )
-    : fakeSidebarUserChatData;
+    : fakeSidebarUserChatData; */
+
+  // Filter data based on searchTerm, applying search on both username or group name
+  const filteredConversations = data?.filter((conversation: Conversation) => {
+    if (conversation.isGroup) {
+      return conversation.group?.name
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    } else {
+      // Check if any user (except the logged-in user) matches the search
+      return conversation.users.some(
+        (u: User) =>
+          u.id !== user?.userId &&
+          u.username.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+    }
+  });
+
+  // Error state
+  if (error) {
+    return <p>Failed to load chats.</p>;
+  }
 
   return (
     <div
@@ -83,7 +106,7 @@ export default function ChatSidebar() {
               </span>
               <ArchiveIcon size={22} />
             </Button>
-            <AddConverstationDropdown />
+            <AddConversationDropdown />
           </div>
         </div>
         <div className="">
@@ -110,28 +133,52 @@ export default function ChatSidebar() {
               />
             ))} */}
             <div className="border-t">
-              {data?.map((conversation: Conversation) => (
-                <div key={conversation.id}>
-                  <div>
-                    {conversation.users.map((u: User) =>
-                      u.id !== user?.userId ? (
-                        <SidebarUserChatCard
-                          key={u.username + u.id}
-                          username={u.username.toLowerCase()}
-                          lastMessage={
-                            conversation.lastMessage ||
-                            "This is just a placeholder for last message. Will add real one after real-time feature is done."
-                          }
-                          lastMessageTime={conversation.updatedAt}
-                          image={u.avatar || "profile-pic1.svg"}
-                        />
-                      ) : null,
-                    )}
-                  </div>
-                  {/*   <p>{conversation.latestMessage}</p>
-                <p>{new Date(conversation.updatedAt).toLocaleString()}</p> */}
+              {isLoading ? (
+                <div className="my-3 w-full space-y-5 p-3">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
+                    <div className="flex w-full items-center space-x-4" key={i}>
+                      <Skeleton className="h-12 w-12 rounded-full" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-[150px]" />
+                        <Skeleton className="h-4 w-[300px]" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                <>
+                  {filteredConversations?.map((conversation: Conversation) => (
+                    <div key={conversation.id} className="fill-foreground">
+                      {/* Render either group or individual chat */}
+                      {conversation.isGroup ? (
+                        <SidebarUserChatCard
+                          key={conversation.id}
+                          username={conversation.group?.name || "Group Chat"}
+                          lastMessage={
+                            conversation.lastMessage || "No messages yet."
+                          }
+                          image={placeholderGroupDp} // Placeholder for group avatar
+                          lastMessageTime={conversation.updatedAt}
+                        />
+                      ) : (
+                        conversation.users
+                          .filter((u: User) => u.id !== user?.userId)
+                          .map((u: User) => (
+                            <SidebarUserChatCard
+                              key={u.id}
+                              username={u.username}
+                              lastMessage={
+                                conversation.lastMessage || "No messages yet."
+                              }
+                              image={u.avatar || placeholderUserDp}
+                              lastMessageTime={conversation.updatedAt}
+                            />
+                          ))
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -142,7 +189,7 @@ export default function ChatSidebar() {
   );
 }
 
-function AddConverstationDropdown() {
+function AddConversationDropdown() {
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
   function handleToggleDropdown() {
@@ -170,4 +217,10 @@ function AddConverstationDropdown() {
   );
 }
 
-// <AddUserDialog />
+/**
+ * 
+ *  <div className="my-5 flex select-none items-center justify-center gap-1 font-medium text-muted-foreground">
+                  <Loader2Icon className="size-5 animate-spin" />
+                  <p>Loading...</p>
+                </div>
+ */

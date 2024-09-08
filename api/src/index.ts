@@ -15,7 +15,7 @@ import {
 // port
 const PORT = process.env.PORT || 8000;
 
-// intializing app
+// initializing app
 const app = express();
 
 // middlewares

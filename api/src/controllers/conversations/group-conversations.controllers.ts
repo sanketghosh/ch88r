@@ -1,5 +1,6 @@
 import { type Request, type Response } from "express";
 import { db } from "../../lib/prisma";
+import { generateUniquePassKey } from "../../utils/unique-name-generator";
 
 /**
  * @function startGroupConversationHandler
@@ -52,6 +53,9 @@ export const startGroupConversationHandler = async (
       const conversation = await prisma.conversation.create({
         data: {
           isGroup: true,
+          users: {
+            connect: groupUserIds.map((id: string) => ({ id })),
+          },
         },
       });
 
@@ -59,7 +63,7 @@ export const startGroupConversationHandler = async (
       const group = await prisma.group.create({
         data: {
           name: groupName,
-          passkey: "",
+          passkey: generateUniquePassKey(),
           groupDescription: groupDescription || null,
           adminId: adminId,
           conversationId: conversation.id,
@@ -73,27 +77,27 @@ export const startGroupConversationHandler = async (
       });
 
       // update the conversation to link it to the group and add users
-      await prisma.conversation.update({
+      const updatedConversation = await prisma.conversation.update({
         where: {
           id: conversation.id,
         },
         data: {
           groupId: group.id,
-          users: {
-            connect: groupUserIds.map((id: string) => ({ id })),
-          },
+        },
+        include: {
+          users: true,
         },
       });
 
       return {
         group,
-        conversation,
+        updatedConversation,
       };
     });
 
     res.status(201).json({
       group: groupConversation.group,
-      conversation: groupConversation.conversation,
+      conversation: groupConversation.updatedConversation,
       message: "SUCCESS! Group conversation has been created.",
     });
   } catch (error) {

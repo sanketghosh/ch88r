@@ -15,7 +15,7 @@ export default function NotificationsSheet() {
     <Sheet>
       <SheetTrigger asChild>
         <Button size={"icon"} variant={"ghost"} className="relative">
-          <span className="absolute -right-1 -top-1 rounded-full bg-red-600 p-1 text-xs font-medium">
+          <span className="absolute -right-1 -top-1 rounded-full bg-red-600 p-1 text-xs font-medium text-white">
             9+
           </span>
           <BellIcon size={22} />

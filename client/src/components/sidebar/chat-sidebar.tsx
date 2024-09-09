@@ -18,11 +18,11 @@ import SearchUsers from "@/components/dialogs/search-users";
 import NotificationsSheet from "@/components/sheets/notifications";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/providers/auth-context-provider";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // IMAGES
-import placeholderUserDp from "../../images/placeholder-user-dp.svg";
-import placeholderGroupDp from "../../images/placeholder-group-dp.svg";
-import { Skeleton } from "../ui/skeleton";
+import placeholderUserDp from "@/images/placeholder-user-dp.svg";
+import placeholderGroupDp from "@/images/placeholder-group-dp.svg";
 
 // TYPES
 type Conversation = {
@@ -31,10 +31,12 @@ type Conversation = {
   updatedAt: Date;
   users: User[];
   isGroup: boolean;
-  group?: {
-    name: string;
-    groupDescription?: string;
-  };
+  group?: Group;
+};
+
+type Group = {
+  name: string;
+  groupDescription: string;
 };
 
 type User = {
@@ -61,13 +63,6 @@ export default function ChatSidebar() {
     const newSearchTerm = event.target.value;
     setSearchTerm(newSearchTerm);
   };
-
-  // Use the original data for filtering
-  /*  const filteredItems = searchTerm
-    ? fakeSidebarUserChatData.filter((item) =>
-        item.username.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-    : fakeSidebarUserChatData; */
 
   // Filter data based on searchTerm, applying search on both username or group name
   const filteredConversations = data?.filter((conversation: Conversation) => {
@@ -101,7 +96,7 @@ export default function ChatSidebar() {
           <div className="flex items-center gap-4">
             <NotificationsSheet />
             <Button size={"icon"} variant={"ghost"} className="relative">
-              <span className="absolute -right-1 -top-1 rounded-full bg-red-600 p-1 text-xs font-medium">
+              <span className="absolute -right-1 -top-1 rounded-full bg-red-600 p-1 text-xs font-medium text-white">
                 9+
               </span>
               <ArchiveIcon size={22} />
@@ -153,12 +148,13 @@ export default function ChatSidebar() {
                       {conversation.isGroup ? (
                         <SidebarUserChatCard
                           key={conversation.id}
-                          username={conversation.group?.name || "Group Chat"}
+                          name={conversation.group?.name || "Group Chat"}
                           lastMessage={
                             conversation.lastMessage || "No messages yet."
                           }
                           image={placeholderGroupDp} // Placeholder for group avatar
                           lastMessageTime={conversation.updatedAt}
+                          isGroup
                         />
                       ) : (
                         conversation.users
@@ -166,7 +162,7 @@ export default function ChatSidebar() {
                           .map((u: User) => (
                             <SidebarUserChatCard
                               key={u.id}
-                              username={u.username}
+                              name={u.username}
                               lastMessage={
                                 conversation.lastMessage || "No messages yet."
                               }
@@ -216,11 +212,3 @@ function AddConversationDropdown() {
     </>
   );
 }
-
-/**
- * 
- *  <div className="my-5 flex select-none items-center justify-center gap-1 font-medium text-muted-foreground">
-                  <Loader2Icon className="size-5 animate-spin" />
-                  <p>Loading...</p>
-                </div>
- */

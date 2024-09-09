@@ -100,6 +100,9 @@ export const getAllConversationsOfAUserHandler = async (
               select: {
                 id: true,
                 username: true,
+                email: true,
+                avatar: true,
+                userAbout: true,
               },
             },
           },

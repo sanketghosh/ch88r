@@ -110,8 +110,10 @@ export const startGroupConversationHandler = async (
 
 /**
  *
- * @param req
- * @param res
+ * @function updateGroupDetailsHandler
+ * @async
+ * @param {Request} req - The HTTP request object containing the group details such as group name, group description and group id.
+ * @param {Response} res -
  * @returns
  * @description
  */
@@ -120,8 +122,7 @@ export const updateGroupDetailsHandler = async (
   req: Request,
   res: Response
 ) => {
-  const { groupId } = req.params;
-  const { groupName, groupDescription } = req.body;
+  const { groupName, groupDescription, groupId } = req.body;
   const userId = req.userId;
 
   if (!userId) {
@@ -177,13 +178,87 @@ export const updateGroupDetailsHandler = async (
 
 /**
  *
+ * @function addUserToGroupHandler
+ * @async
  * @param req
  * @param res
  * @returns
  * @description
  */
 export const addUserToGroupHandler = async (req: Request, res: Response) => {
+  const { groupName, groupDescription, groupId, userToAddId } = req.body;
+  const userId = req.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      message: "ERROR! User not authenticated.",
+    });
+  }
+
+  if (!userToAddId) {
+    return res.status(400).json({
+      message:
+        "ERROR! A valid user id of the user you want to add is required.",
+    });
+  }
+
   try {
+    // check if the group exists and fetch admin's id to verify permissions
+
+    const group = await db.group.findUnique({
+      where: {
+        id: groupId,
+      },
+      select: {
+        id: true,
+        adminId: true,
+        users: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    if (!group) {
+      return res.status(404).json({
+        message: "ERROR! Group not found.",
+      });
+    }
+
+    // optional
+    if (group.adminId !== userId) {
+      return res.status(403).json({
+        message: "ERROR! Only the group admin can add users.",
+      });
+    }
+
+    // check if user is already a member of the group
+    const isUserInGroup = group.users.some((user) => user.id === userToAddId);
+
+    if (isUserInGroup) {
+      return res.status(400).json({
+        message: "ERROR! User is already a member of the group.",
+      });
+    }
+
+    // add the user to the group
+    await db.group.update({
+      where: {
+        id: groupId,
+      },
+      data: {
+        users: {
+          connect: {
+            id: userToAddId,
+          },
+        },
+      },
+    });
+
+    return res.status(200).json({
+      message: "SUCCESS! User added to the group successfully..",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -193,14 +268,76 @@ export const addUserToGroupHandler = async (req: Request, res: Response) => {
 };
 
 /**
- *
+ * @function leaveGroupHandler
  * @param req
  * @param res
  * @returns
  * @description
  */
 export const leaveGroupHandler = async (req: Request, res: Response) => {
+  const { groupId } = req.body;
+  const userId = req.userId;
+
+  if (!groupId) {
+    return res.status(400).json({
+      message: "ERROR! Missing group ID.",
+    });
+  }
+
   try {
+    // fetch the group to ensure the user is part of it
+    const group = await db.group.findUnique({
+      where: {
+        id: groupId,
+      },
+      select: {
+        adminId: true,
+        users: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    if (!group) {
+      return res.status(404).json({
+        message: "ERROR! Group not found.",
+      });
+    }
+
+    // check if the user is the admin
+    if (group.adminId === userId) {
+      return res.status(403).json({
+        message: "ERROR! Admin cannot leave the group.",
+      });
+    }
+
+    // check if the user is part of the group
+    const isMember = group.users.some((user) => user.id === userId);
+    if (!isMember) {
+      return res.status(403).json({
+        message: "ERROR! You are not a member of this group.",
+      });
+    }
+
+    // proceed to disconnect the user from the group
+    await db.group.update({
+      where: {
+        id: groupId,
+      },
+      data: {
+        users: {
+          disconnect: {
+            id: userId,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({
+      message: "SUCCESS! You have successfully left the group",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -210,14 +347,63 @@ export const leaveGroupHandler = async (req: Request, res: Response) => {
 };
 
 /**
- *
+ * @function kickUserHandler
  * @param req
  * @param res
  * @returns
  * @description
  */
 export const kickUserHandler = async (req: Request, res: Response) => {
+  const { groupId, userToKickId } = req.body;
+  const adminId = req.userId;
+
+  if (!groupId || !userToKickId) {
+    return res.status(400).json({
+      message: "ERROR! Missing group ID or user ID.",
+    });
+  }
+
   try {
+    // fetch the group to ensure the requesting user is the admin
+    const group = await db.group.findUnique({
+      where: {
+        id: groupId,
+      },
+      select: {
+        adminId: true,
+      },
+    });
+
+    if (!group) {
+      return res.status(404).json({
+        message: "ERROR! Group not found.",
+      });
+    }
+
+    // check if the requesting user is the admin of the group
+    if (group.adminId !== adminId) {
+      return res.status(400).json({
+        message: "ERROR! Only the group admin can remove users.",
+      });
+    }
+
+    //proceed to disconnect the user from the group
+    await db.group.update({
+      where: {
+        id: groupId,
+      },
+      data: {
+        users: {
+          disconnect: {
+            id: userToKickId,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({
+      message: "SUCCESS! User has been removed from the group.",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({

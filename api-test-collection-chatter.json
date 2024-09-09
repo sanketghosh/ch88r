@@ -1,0 +1,176 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "chatter",
+    "collectionId": "ec33bb12-6f72-4361-af77-9890337556fa",
+    "dateExported": "2024-09-09T16:37:58.926Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "655223f8-5f9b-4838-a821-e5412a554374",
+            "name": "auth",
+            "containerId": "",
+            "created": "2024-09-08T07:36:59.329Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "992954be-d05d-4475-99ee-e6e025d4f304",
+            "name": "users",
+            "containerId": "",
+            "created": "2024-09-08T08:12:44.061Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "e726ebcc-5112-412b-b9cb-e1e2375bc1f2",
+            "name": "chats",
+            "containerId": "",
+            "created": "2024-09-08T08:14:23.344Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "f6f9ed37-4178-4da3-8663-6698dd34a965",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "655223f8-5f9b-4838-a821-e5412a554374",
+            "name": "register-request",
+            "url": "http://localhost:8000/api/v1/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-09-08T07:37:11.848Z",
+            "modified": "2024-09-08T07:40:35.723Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\":\"mario\",\n  \"email\":\"mario@mail.com\",\n  \"password\":\"123456\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "bf90e3c6-1937-4593-9dcb-1d35bc5a4c3d",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "655223f8-5f9b-4838-a821-e5412a554374",
+            "name": "login-request",
+            "url": "http://localhost:8000/api/v1/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-09-08T07:40:45.945Z",
+            "modified": "2024-09-08T08:12:31.443Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"mario@mail.com\",\n  \"password\":\"123456\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "3724da92-7db5-455e-bbd9-f24e77a36db7",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "992954be-d05d-4475-99ee-e6e025d4f304",
+            "name": "fetch-alll-users",
+            "url": "http://localhost:8000/api/v1/users",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-09-08T08:12:52.763Z",
+            "modified": "2024-09-08T08:13:09.637Z",
+            "headers": []
+        },
+        {
+            "_id": "bf249e52-e5c3-4a70-b522-c309bb831b19",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "e726ebcc-5112-412b-b9cb-e1e2375bc1f2",
+            "name": "start-individual-chat",
+            "url": "http://localhost:8000/api/v1/individual-conversation",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-09-08T08:14:48.487Z",
+            "modified": "2024-09-08T08:15:50.812Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"participantId\":\"cm0t9j5dx0001s8l19bicy619\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "ec21f50c-9870-4a6b-b9d5-14c25e2b8cd4",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "e726ebcc-5112-412b-b9cb-e1e2375bc1f2",
+            "name": "start-group-chat",
+            "url": "http://localhost:8000/api/v1/group-conversation",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-09-08T15:08:14.103Z",
+            "modified": "2024-09-08T15:10:20.639Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"groupName\":\"FriendsChat\",\n  \"groupDescription\":\"This is just a chat for friends\",\n  \"userIds\":[\"cm0t9jd8q0002s8l104yotaxp\",\"cm0t9jurc0003s8l1o4xafbv3\"]\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "327ecb33-6c5d-490c-b1af-292350fc1687",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "e726ebcc-5112-412b-b9cb-e1e2375bc1f2",
+            "name": "get-all-chats",
+            "url": "http://localhost:8000/api/v1/conversations",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-09-08T17:11:40.437Z",
+            "modified": "2024-09-08T17:11:53.937Z",
+            "headers": []
+        },
+        {
+            "_id": "17ffcc9e-1075-4fbf-945a-c6f2b237fb12",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "e726ebcc-5112-412b-b9cb-e1e2375bc1f2",
+            "name": "update-group-details",
+            "url": "http://localhost:8000/api/v1/group-conversation/update-group-details",
+            "method": "PUT",
+            "sortNum": 80000,
+            "created": "2024-09-09T07:35:30.938Z",
+            "modified": "2024-09-09T07:39:00.490Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"groupId\":\"cm0tsbj350007p09lznwucgkv\",\n  \"groupName\":\"We are friends\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "c2e27f1d-81fb-429b-a1ba-eed6a4454a93",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "e726ebcc-5112-412b-b9cb-e1e2375bc1f2",
+            "name": "add-user-to-group",
+            "url": "http://localhost:8000/api/v1/group-conversation/add-user",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2024-09-09T15:57:16.484Z",
+            "modified": "2024-09-09T16:01:02.584Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"groupId\":\"cm0tsbj350007p09lznwucgkv\",\n  \"userToAddId\":\"cm0t9j5dx0001s8l19bicy619\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "b51b2238-ec93-4abb-ba97-1209111d22d3",
+            "colId": "ec33bb12-6f72-4361-af77-9890337556fa",
+            "containerId": "e726ebcc-5112-412b-b9cb-e1e2375bc1f2",
+            "name": "kick-user-handler",
+            "url": "http://localhost:8000/api/v1/group-conversation/kick-user",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2024-09-09T16:04:08.043Z",
+            "modified": "2024-09-09T16:14:18.451Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"groupId\":\"cm0tsbj350007p09lznwucgkv\",\n  \"userToKickId\":\"cm0t9j5dx0001s8l19bicy619\"\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "4NXAsXqh6_2qbOiXbMakTd4UnGE1xB2EnIGtgGGV3APc9MSJS1CZAhAqdX7FeTQAGDgKJSbdqIPQswwc_6xlBg"
+}

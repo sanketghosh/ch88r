@@ -10,7 +10,7 @@ import { verifyTokenHandler } from "../../middleware/verify-token.middleware";
 
 const router = express.Router();
 
-// start group convo
+// start group conversation
 router.post("/", verifyTokenHandler, startGroupConversationHandler);
 
 // rename group

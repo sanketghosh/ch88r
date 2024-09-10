@@ -74,16 +74,28 @@ LOGIN USER
 export const loginUserHandler = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
+  if (!email) {
+    return res.status(400).json({
+      message: "ERROR! Bad request. Email is required",
+    });
+  }
+
+  if (!password) {
+    return res.status(400).json({
+      message: "ERROR! Bad request. Password is required",
+    });
+  }
+
   try {
     // find user
-    const existngUser = await db.user.findUnique({
+    const existingUser = await db.user.findUnique({
       where: {
         email: email,
       },
     });
 
-    // if user dosen't exist
-    if (!existngUser) {
+    // if user doesn't exist
+    if (!existingUser) {
       return res.status(401).json({
         message:
           "ERROR! Bad request. Cannot login, check your credentials and try again.",
@@ -91,7 +103,7 @@ export const loginUserHandler = async (req: Request, res: Response) => {
     }
 
     // assert that existingUser is not null
-    const user = existngUser as User;
+    const user = existingUser as User;
 
     // compare password
     let comparePassword = await bcrypt.compare(password, user.password);

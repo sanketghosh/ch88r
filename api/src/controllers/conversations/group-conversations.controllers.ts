@@ -28,11 +28,11 @@ export const startGroupConversationHandler = async (
   req: Request,
   res: Response
 ) => {
-  const { groupName, groupDescription, userIds } = req.body;
+  const { groupName, groupDescription, participantsIds } = req.body;
   const adminId = req.userId;
 
   // ensure the admin ID is included in the group users
-  const groupUserIds = [...new Set([adminId, ...userIds])];
+  const groupMemberIds = [...new Set([adminId, ...participantsIds])];
 
   if (!adminId) {
     return res.status(401).json({
@@ -40,7 +40,7 @@ export const startGroupConversationHandler = async (
     });
   }
 
-  if (!groupName || !groupDescription || userIds.length > 2) {
+  if (!groupName || !groupDescription || participantsIds.length > 2) {
     return res.status(400).json({
       message: "ERROR! Missing group name or users.",
     });
@@ -49,12 +49,12 @@ export const startGroupConversationHandler = async (
   try {
     // transaction to create the group and conversation atomically
     const groupConversation = await db.$transaction(async (prisma) => {
-      // create a new convo marked as a group
+      // create a new conversation marked as a group
       const conversation = await prisma.conversation.create({
         data: {
           isGroup: true,
           users: {
-            connect: groupUserIds.map((id: string) => ({ id })),
+            connect: groupMemberIds.map((id: string) => ({ id })),
           },
         },
       });
@@ -68,7 +68,7 @@ export const startGroupConversationHandler = async (
           adminId: adminId,
           conversationId: conversation.id,
           users: {
-            connect: groupUserIds.map((id: string) => ({ id })),
+            connect: groupMemberIds.map((id: string) => ({ id })),
           },
         },
         include: {

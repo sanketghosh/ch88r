@@ -23,6 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // IMAGES
 import placeholderUserDp from "@/images/placeholder-user-dp.svg";
 import placeholderGroupDp from "@/images/placeholder-group-dp.svg";
+import ChatUserCardSkeleton from "../skeletons/chat-user-card-skeleton";
 
 // TYPES
 type Conversation = {
@@ -131,13 +132,7 @@ export default function ChatSidebar() {
               {isLoading ? (
                 <div className="my-3 w-full space-y-5 p-3">
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
-                    <div className="flex w-full items-center space-x-4" key={i}>
-                      <Skeleton className="h-12 w-12 rounded-full" />
-                      <div className="space-y-2">
-                        <Skeleton className="h-4 w-[150px]" />
-                        <Skeleton className="h-4 w-[300px]" />
-                      </div>
-                    </div>
+                    <ChatUserCardSkeleton key={i} />
                   ))}
                 </div>
               ) : (

@@ -1,4 +1,4 @@
-import { User } from "@/types";
+import { AuthenticatedUserType } from "@/types";
 import {
   createContext,
   ReactNode,
@@ -9,8 +9,8 @@ import {
 
 // define context type
 type AuthContextType = {
-  user: User | null;
-  updateUser: (data: User | null) => void;
+  user: AuthenticatedUserType | null;
+  updateUser: (data: AuthenticatedUserType | null) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,9 +27,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     );
   }
 
-  const [currentUser, setCurrentUser] = useState<User | null>(initialUser);
+  const [currentUser, setCurrentUser] = useState<AuthenticatedUserType | null>(
+    initialUser,
+  );
 
-  const updateUserHandler = (data: User | null) => {
+  const updateUserHandler = (data: AuthenticatedUserType | null) => {
     try {
       const jsonData = JSON.stringify(data);
       localStorage.setItem("userData", jsonData);

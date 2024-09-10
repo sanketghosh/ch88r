@@ -1,11 +1,16 @@
+// PACKAGES
+import { useEffect, useState } from "react";
 import * as searchUsers from "@/actions/users-actions/search-users";
 import useAddUserModal from "@/hooks/use-add-user-modal";
 import { useQuery } from "@tanstack/react-query";
 import { FrownIcon, Loader2Icon, SearchIcon, UserPlusIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import SearchUserCards from "../cards/search-user-card";
-import { Input } from "../ui/input";
-import DialogWrapper from "./dialog-wrapper";
+
+// COMPONENTS
+import SearchUserCards from "@/components/cards/search-user-card";
+import { Input } from "@/components/ui/input";
+import DialogWrapper from "@/components/dialogs/dialog-wrapper";
+import UsersNotFoundScreen from "@/components/messages/users-not-found-screen";
+import { UserType } from "@/types";
 
 export default function SearchUsers() {
   const { isOpen, onOpen, onClose } = useAddUserModal();
@@ -30,12 +35,6 @@ export default function SearchUsers() {
     staleTime: 5000,
     refetchOnWindowFocus: false,
   });
-
-  type UserType = {
-    image: string;
-    username: string;
-    email: string;
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -69,13 +68,13 @@ export default function SearchUsers() {
         />
         <div className="max-h-72 min-h-72 overflow-y-scroll rounded-md border bg-secondary/30 p-4">
           {isLoading && (
-            <NotUsersScreen
+            <UsersNotFoundScreen
               icon={<Loader2Icon size={30} className="animate-spin" />}
               text="Loading..."
             />
           )}
           {error && (
-            <NotUsersScreen
+            <UsersNotFoundScreen
               icon={<FrownIcon size={30} />}
               text={error.message}
             />
@@ -86,30 +85,16 @@ export default function SearchUsers() {
               {data.users.map((user: UserType) => (
                 <SearchUserCards
                   key={user.email + user.username}
-                  email={user.email}
-                  username={user.username}
+                  user={user}
+                  handleButtonClick={() => {}}
                 />
               ))}
             </div>
           ) : (
-            <NotUsersScreen icon={<SearchIcon />} text="Start searching" />
+            <UsersNotFoundScreen icon={<SearchIcon />} text="Start searching" />
           )}
         </div>
       </DialogWrapper>
     </>
-  );
-}
-
-type NotUserScreenProps = {
-  icon: React.ReactElement;
-  text?: string;
-};
-
-function NotUsersScreen({ icon, text }: NotUserScreenProps) {
-  return (
-    <div className="flex h-full flex-col items-center justify-center gap-2">
-      {icon}
-      <p>{text}</p>
-    </div>
   );
 }

@@ -53,9 +53,10 @@ export default function ChatSidebar() {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["fetch-chats-with-logged-user"],
+    queryKey: ["fetch-conversations"],
     queryFn: getLoggedInUserChats.getLoggedInUserChats,
     staleTime: 5000,
+    // refetchOnWindowFocus: true,
   });
 
   console.log(data);

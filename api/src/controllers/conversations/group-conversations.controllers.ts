@@ -28,11 +28,11 @@ export const startGroupConversationHandler = async (
   req: Request,
   res: Response
 ) => {
-  const { groupName, groupDescription, participantsIds } = req.body;
+  const { groupName, groupDescription, groupParticipantsIds } = req.body;
   const adminId = req.userId;
 
   // ensure the admin ID is included in the group users
-  const groupMemberIds = [...new Set([adminId, ...participantsIds])];
+  const groupMemberIds = [...new Set([adminId, ...groupParticipantsIds])];
 
   if (!adminId) {
     return res.status(401).json({
@@ -40,7 +40,7 @@ export const startGroupConversationHandler = async (
     });
   }
 
-  if (!groupName || !groupDescription || participantsIds.length > 2) {
+  if (!groupName || !groupDescription || groupParticipantsIds.length > 2) {
     return res.status(400).json({
       message: "ERROR! Missing group name or users.",
     });

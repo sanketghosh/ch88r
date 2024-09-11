@@ -87,3 +87,17 @@ export const CreateGroupSchema = z.object({
   groupUserNames: z.string().array(),
 });
 */
+
+/* 
+ADD USERS TO GROUP SCHEMA 
+*/
+
+export const CreateGroupSchema = z.object({
+  groupName: z.string().min(1, {
+    message: "Group name is required.",
+  }),
+  groupDescription: z.string().min(1, {
+    message: "You need a group description to get started.",
+  }),
+  groupParticipantsIds: z.array(z.string()),
+});

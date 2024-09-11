@@ -6,12 +6,14 @@ type SearchUserCardsProps = {
   forGroupSearch?: boolean;
   handleButtonClick: (user: UserType) => void;
   user: UserType;
+  buttonType?: "submit" | "button";
 };
 
 export default function SearchUserCards({
   user,
   forGroupSearch,
   handleButtonClick,
+  buttonType = "submit",
 }: SearchUserCardsProps) {
   return (
     <div className="flex cursor-pointer items-center justify-between rounded-lg border bg-background px-3 py-2 hover:bg-secondary/30">
@@ -30,6 +32,7 @@ export default function SearchUserCards({
         size={"icon"}
         variant={"secondary"}
         onClick={() => handleButtonClick(user)}
+        type={buttonType}
       >
         {forGroupSearch ? <PlusSquareIcon /> : <MessageCircleIcon />}
       </Button>

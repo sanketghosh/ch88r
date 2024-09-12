@@ -1,8 +1,11 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
-import { MessageSquareIcon, UserIcon } from "lucide-react";
+import { HeartIcon, MessageSquareIcon, UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import SearchUsers from "../dialogs/search-users";
+import CreateGroupDialog from "../dialogs/create-group-dialog";
+import NavBaseButton from "../buttons/nav-base-button";
 
 export default function SideNavbar() {
   return (
@@ -10,9 +13,19 @@ export default function SideNavbar() {
       <div className="flex h-full w-full flex-col items-center justify-between px-2 py-6">
         <div className="flex w-full flex-col items-center gap-3">
           {/* home icon */}
-          <Button size={"icon"} variant={"secondary"} className="size-12">
-            <MessageSquareIcon className="size-5" />
-          </Button>
+
+          <Link to={"/"}>
+            <NavBaseButton>
+              <MessageSquareIcon className="size-5" />
+            </NavBaseButton>
+          </Link>
+          <SearchUsers />
+          <CreateGroupDialog />
+          <Link to={"/"}>
+            <NavBaseButton>
+              <HeartIcon className="size-5" />
+            </NavBaseButton>
+          </Link>
         </div>
 
         <div className="flex flex-col">
@@ -20,7 +33,7 @@ export default function SideNavbar() {
           <Link
             to={"/account"}
             className={cn(
-              buttonVariants({ size: "icon", variant: "outline" }),
+              buttonVariants({ size: "icon", variant: "default" }),
               "size-12",
             )}
           >

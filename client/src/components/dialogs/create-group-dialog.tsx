@@ -5,19 +5,16 @@ import useCreateGroupModal from "@/hooks/use-create-group-modal";
 import DialogWrapper from "@/components/dialogs/dialog-wrapper";
 import GroupAddIcon from "@/components/icons/add-group";
 import CreateGroupForm from "@/components/forms/chat-forms/create-group-form";
+import NavBaseButton from "../buttons/nav-base-button";
 
 export default function CreateGroupDialog() {
   const { isOpen, onOpen, onClose } = useCreateGroupModal();
 
   return (
     <>
-      <button
-        className="flex w-full items-center rounded-md px-2 py-2 text-sm font-medium hover:bg-secondary/30"
-        onClick={onOpen}
-      >
-        <GroupAddIcon className="mr-2 size-4" />
-        Create Group
-      </button>
+      <NavBaseButton onClickFn={onOpen}>
+        <GroupAddIcon className="size-5" />
+      </NavBaseButton>
 
       <DialogWrapper
         onModalClose={onClose}

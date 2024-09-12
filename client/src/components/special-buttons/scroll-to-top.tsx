@@ -38,7 +38,7 @@ export default function ScrollToTopButton({
     isVisible && (
       <Button
         onClick={scrollToTop}
-        className="sticky bottom-20 left-[22rem] z-10"
+        className="sticky bottom-28 left-[32rem] z-10 md:bottom-20 md:left-[22rem]"
         size={"icon"}
       >
         <ArrowUp size={24} />

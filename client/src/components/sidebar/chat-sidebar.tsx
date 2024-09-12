@@ -24,6 +24,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import placeholderUserDp from "@/images/placeholder-user-dp.svg";
 import placeholderGroupDp from "@/images/placeholder-group-dp.svg";
 import ChatUserCardSkeleton from "../skeletons/chat-user-card-skeleton";
+import BottomBar from "../bottombar/bottombar";
+import { fakeSidebarUserChatData } from "@/data";
 
 // TYPES
 type Conversation = {
@@ -103,7 +105,7 @@ export default function ChatSidebar() {
               </span>
               <ArchiveIcon size={22} />
             </Button>
-            <AddConversationDropdown />
+            {/* <AddConversationDropdown /> */}
           </div>
         </div>
         <div className="">
@@ -120,13 +122,13 @@ export default function ChatSidebar() {
               </div>
             </div>
 
-            {/*  {filteredItems.map((chat, idx) => (
+            {/* {fakeSidebarUserChatData.map((chat, idx) => (
               <SidebarUserChatCard
                 key={chat.username + idx}
-                username={chat.username.toLowerCase()}
+                name={chat.username.toLowerCase()}
                 lastMessage={chat.lastMessage}
                 image={chat.image}
-                lastMessageTime=""
+                lastMessageTime={new Date()}
               />
             ))} */}
             <div className="border-t">
@@ -177,11 +179,12 @@ export default function ChatSidebar() {
 
         <ScrollToTopButton targetRef={sidebarRef} />
       </div>
+      <BottomBar />
     </div>
   );
 }
 
-function AddConversationDropdown() {
+/* function AddConversationDropdown() {
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
   function handleToggleDropdown() {
@@ -208,3 +211,4 @@ function AddConversationDropdown() {
     </>
   );
 }
+ */

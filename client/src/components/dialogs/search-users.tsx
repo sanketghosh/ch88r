@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import DialogWrapper from "@/components/dialogs/dialog-wrapper";
 import UsersNotFoundScreen from "@/components/messages/users-not-found-screen";
 import { UserType } from "@/types";
+import NavBaseButton from "../buttons/nav-base-button";
 
 export default function SearchUsers() {
   const { isOpen, onOpen, onClose } = useAddUserModal();
@@ -47,13 +48,9 @@ export default function SearchUsers() {
 
   return (
     <>
-      <button
-        className="flex w-full items-center rounded-md px-2 py-2 text-sm font-medium hover:bg-secondary/30"
-        onClick={onOpen}
-      >
-        <UserPlusIcon size={16} className="mr-2" />
-        Add User
-      </button>
+      <NavBaseButton onClickFn={onOpen}>
+        <UserPlusIcon className="size-5" />
+      </NavBaseButton>
 
       <DialogWrapper
         onModalClose={onClose}

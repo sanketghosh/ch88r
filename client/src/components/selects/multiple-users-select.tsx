@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import ChatUserCardSkeleton from "@/components/skeletons/chat-user-card-skeleton";
 import UsersNotFoundScreen from "@/components/messages/users-not-found-screen";
 import SearchUserCards from "@/components/cards/search-user-card";
+import { Label } from "../ui/label";
 
 type MultipleUsersSelectProps = {
   setSelectedUsers: (users: UserType[]) => void;
@@ -100,10 +101,12 @@ export default function MultipleUsersSelect({
 
   return (
     <div className="space-y-3">
+      <Label htmlFor="searchUsers">Search Users</Label>
       <Input
-        placeholder="Search user by username or email."
+        placeholder="Try email or username..."
         value={query}
         onChange={handleInputChange}
+        id="searchUsers"
       />
       <div className="flex flex-wrap gap-2">
         {selectedUsers?.map((usr) => (

@@ -1,52 +1,19 @@
 // PACKAGES
 import { useQuery } from "@tanstack/react-query";
-import {
-  ArchiveIcon,
-  Loader2Icon,
-  MessageCirclePlusIcon,
-  SearchIcon,
-  XIcon,
-} from "lucide-react";
+import { ArchiveIcon, SearchIcon } from "lucide-react";
 import { useRef, useState } from "react";
+
+// LOCAL MODULES
 import * as getLoggedInUserChats from "@/actions/chat-actions/get-loggedin-user-chats";
+import { useAuthContext } from "@/providers/auth-context-provider";
+import { Conversation, UserType } from "@/types";
 
 // COMPONENTS
-import SidebarUserChatCard from "@/components/sidebar/sidebar-user-chat-card";
 import ScrollToTopButton from "@/components/special-buttons/scroll-to-top";
-import CreateGroupDialog from "@/components/dialogs/create-group-dialog";
-import SearchUsers from "@/components/dialogs/search-users";
 import NotificationsSheet from "@/components/sheets/notifications";
 import { Button } from "@/components/ui/button";
-import { useAuthContext } from "@/providers/auth-context-provider";
-import { Skeleton } from "@/components/ui/skeleton";
-
-// IMAGES
-import placeholderUserDp from "@/images/placeholder-user-dp.svg";
-import placeholderGroupDp from "@/images/placeholder-group-dp.svg";
-import ChatUserCardSkeleton from "../skeletons/chat-user-card-skeleton";
-import BottomBar from "../bottombar/bottombar";
-import { fakeSidebarUserChatData } from "@/data";
-
-// TYPES
-type Conversation = {
-  id: string;
-  lastMessage: string;
-  updatedAt: Date;
-  users: User[];
-  isGroup: boolean;
-  group?: Group;
-};
-
-type Group = {
-  name: string;
-  groupDescription: string;
-};
-
-type User = {
-  id: string;
-  username: string;
-  avatar: string;
-};
+import BottomBar from "@/components/bottombar/bottombar";
+import ChatList from "@/components/chat/chat-list";
 
 export default function ChatSidebar() {
   const { user } = useAuthContext();
@@ -69,20 +36,22 @@ export default function ChatSidebar() {
   };
 
   // Filter data based on searchTerm, applying search on both username or group name
-  const filteredConversations = data?.filter((conversation: Conversation) => {
-    if (conversation.isGroup) {
-      return conversation.group?.name
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase());
-    } else {
-      // Check if any user (except the logged-in user) matches the search
-      return conversation.users.some(
-        (u: User) =>
-          u.id !== user?.userId &&
-          u.username.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-    }
-  });
+  const filteredConversations: Conversation[] = data?.filter(
+    (conversation: Conversation) => {
+      if (conversation.isGroup) {
+        return conversation.group?.name
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      } else {
+        // Check if any user (except the logged-in user) matches the search
+        return conversation.users.some(
+          (u: UserType) =>
+            u.id !== user?.userId &&
+            u.username.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
+      }
+    },
+  );
 
   // Error state
   if (error) {
@@ -131,49 +100,11 @@ export default function ChatSidebar() {
                 lastMessageTime={new Date()}
               />
             ))} */}
-            <div className="border-t">
-              {isLoading ? (
-                <div className="my-3 w-full space-y-5 p-3">
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
-                    <ChatUserCardSkeleton key={i} />
-                  ))}
-                </div>
-              ) : (
-                <>
-                  {filteredConversations?.map((conversation: Conversation) => (
-                    <div key={conversation.id} className="fill-foreground">
-                      {/* Render either group or individual chat */}
-                      {conversation.isGroup ? (
-                        <SidebarUserChatCard
-                          key={conversation.id}
-                          name={conversation.group?.name || "Group Chat"}
-                          lastMessage={
-                            conversation.lastMessage || "No messages yet."
-                          }
-                          image={placeholderGroupDp} // Placeholder for group avatar
-                          lastMessageTime={conversation.updatedAt}
-                          isGroup
-                        />
-                      ) : (
-                        conversation.users
-                          .filter((u: User) => u.id !== user?.userId)
-                          .map((u: User) => (
-                            <SidebarUserChatCard
-                              key={u.id}
-                              name={u.username}
-                              lastMessage={
-                                conversation.lastMessage || "No messages yet."
-                              }
-                              image={u.avatar || placeholderUserDp}
-                              lastMessageTime={conversation.updatedAt}
-                            />
-                          ))
-                      )}
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
+            <ChatList
+              filteredConversations={filteredConversations}
+              isLoading={isLoading}
+              user={user}
+            />
           </div>
         </div>
 
@@ -183,32 +114,3 @@ export default function ChatSidebar() {
     </div>
   );
 }
-
-/* function AddConversationDropdown() {
-  const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
-
-  function handleToggleDropdown() {
-    setToggleDropdown(!toggleDropdown);
-  }
-
-  return (
-    <>
-      <div className="relative">
-        <Button onClick={handleToggleDropdown} size={"icon"} variant={"ghost"}>
-          {!toggleDropdown ? (
-            <MessageCirclePlusIcon size={22} />
-          ) : (
-            <XIcon size={22} />
-          )}
-        </Button>
-        {toggleDropdown && (
-          <div className="absolute right-1 top-12 z-20 w-40 rounded-md border bg-background p-1">
-            <SearchUsers />
-            <CreateGroupDialog />
-          </div>
-        )}
-      </div>
-    </>
-  );
-}
- */

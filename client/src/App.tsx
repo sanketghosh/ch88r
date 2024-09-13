@@ -1,6 +1,7 @@
 import ProtectedRoute from "@/components/protected/protected-route";
-import { Account, Auth, ErrorPage, Home } from "@/pages";
+import { Account, Auth, ChatScreen, ErrorPage, Home } from "@/pages";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import MainChatScreenLayout from "./layouts/main-chat-screen-layout";
 
 export default function App() {
   return (
@@ -10,7 +11,19 @@ export default function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <Home />
+              <MainChatScreenLayout>
+                <Home />
+              </MainChatScreenLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat/:id"
+          element={
+            <ProtectedRoute>
+              <MainChatScreenLayout>
+                <ChatScreen />
+              </MainChatScreenLayout>
             </ProtectedRoute>
           }
         />

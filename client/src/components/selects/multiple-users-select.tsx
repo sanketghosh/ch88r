@@ -113,11 +113,11 @@ export default function MultipleUsersSelect({
         {selectedUsers?.map((usr) => (
           <div
             key={usr.email}
-            className="flex gap-2 rounded-sm border bg-secondary/30 px-2 py-1 text-sm"
+            className="flex gap-2 rounded-sm bg-emerald-800 px-2 py-1 text-sm font-medium text-white"
           >
             <p>{usr.username}</p>
             <button
-              className="rounded-sm border bg-background p-1"
+              className="rounded-sm bg-background p-1 hover:bg-background/30"
               onClick={() => handleDeleteUser(usr)}
             >
               <XIcon size={13} />

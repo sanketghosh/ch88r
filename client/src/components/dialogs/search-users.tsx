@@ -1,18 +1,20 @@
 // PACKAGES
 import { useEffect, useState } from "react";
-import * as searchUsers from "@/actions/users-actions/search-users";
 import { useQuery } from "@tanstack/react-query";
 import { FrownIcon, Loader2Icon, SearchIcon, UserPlusIcon } from "lucide-react";
+
+// LOCAL MODULES
+import * as searchUsers from "@/actions/users-actions/search-users";
+import { UserType } from "@/types";
 
 // COMPONENTS
 import SearchUserCards from "@/components/cards/search-user-card";
 import { Input } from "@/components/ui/input";
 import DialogWrapper from "@/components/dialogs/dialog-wrapper";
 import UsersNotFoundScreen from "@/components/messages/users-not-found-screen";
-import { UserType } from "@/types";
-import NavBaseButton from "../buttons/nav-base-button";
-import ConfirmIndividualConversationDialog from "./confirm-individual-conversation-dialog";
-import { Dialog, DialogTrigger } from "../ui/dialog";
+import NavBaseButton from "@/components/buttons/nav-base-button";
+import ConfirmIndividualConversationDialog from "@/components/dialogs/confirm-individual-conversation-dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 export default function SearchUsers() {
   const [query, setQuery] = useState<string>("");

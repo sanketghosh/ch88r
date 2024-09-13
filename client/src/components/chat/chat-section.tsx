@@ -6,24 +6,33 @@ import { useGetRandomHexColor } from "@/hooks/use-random-hex-color";
 import { cn } from "@/lib/utils";
 import LIcon from "../icons/L-icon";
 
+import placeholderUserDp from "@/images/placeholder-user-dp.svg";
+import { useLocation } from "react-router-dom";
+
 export default function ChatSection() {
   const { getRandomColor } = useGetRandomHexColor();
+  const location = useLocation();
+  const { data } = location.state || {}; // Access the passed user data
 
   return (
     <section className="h-screen w-full">
       <div className=" flex h-full w-full flex-col justify-between">
-        <ChatSectionTopbar />
+        <ChatSectionTopbar
+          name={data?.name}
+          image={data.image}
+          isGroup={data.isGroup}
+        />
         <div className="h-full w-full space-y-3 overflow-y-scroll p-4 lg:space-y-5">
           {fake_msg_array.map((item, idx) => (
             <div key={item.msg + idx} className="relative flex gap-2">
               <img
-                src="./profile-pic1.svg"
+                src={placeholderUserDp}
                 alt=""
-                className="size-8 rounded-full border-2 border-foreground/50 bg-secondary md:size-10"
+                className="size-8 rounded-full border border-foreground/30 md:size-10"
               />
               <div className="flex flex-col">
                 <p
-                  className={`text-[15px] font-extrabold text-[${getRandomColor()}]`}
+                  className={`text-[15px] font-medium text-[${getRandomColor()}]`}
                   style={{ color: `${getRandomColor()}` }}
                 >
                   @username

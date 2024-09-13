@@ -21,3 +21,17 @@ export type DataType = {
   username: string;
   lastMessage: string;
 };
+
+export type Conversation = {
+  id: string;
+  lastMessage: string;
+  updatedAt: Date;
+  users: UserType[];
+  isGroup: boolean;
+  group?: Group;
+};
+
+export type Group = {
+  name: string;
+  groupDescription: string;
+};

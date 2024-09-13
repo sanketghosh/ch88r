@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "@/constants";
 
-export const startIndividualChat = async (formData: string) => {
+export const startIndividualChat = async (participantId: string) => {
   try {
     const response = await fetch(
       `${API_BASE_URL}/api/v1/individual-conversation`,
@@ -10,7 +10,7 @@ export const startIndividualChat = async (formData: string) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ participantId }),
       },
     );
 

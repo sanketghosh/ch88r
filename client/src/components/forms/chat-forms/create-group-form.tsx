@@ -1,3 +1,17 @@
+// PACKAGES
+import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+// LOCAL MODULES
+import { CreateGroupSchema } from "@/schemas";
+import { UserType } from "@/types";
+import * as createNewGroup from "@/actions/chat-actions/group-actions/create-new-group";
+
+// COMPONENTS
 import MultipleUsersSelect from "@/components/selects/multiple-users-select";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,15 +24,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CreateGroupSchema } from "@/schemas";
-import { UserType } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import * as createNewGroup from "@/actions/chat-actions/group-actions/create-new-group";
-import { toast } from "sonner";
 
 export default function CreateGroupForm() {
   const queryClient = useQueryClient();
@@ -77,7 +82,7 @@ export default function CreateGroupForm() {
                       {...field}
                       placeholder="We are friends"
                       type="text"
-                      //   disabled={mutation.isPending}
+                      disabled={mutation.isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -94,7 +99,7 @@ export default function CreateGroupForm() {
                     <Textarea
                       {...field}
                       placeholder="Just a group for friends to connect and chat with each other."
-                      //   disabled={mutation.isPending}
+                      disabled={mutation.isPending}
                     ></Textarea>
                   </FormControl>
                   <FormMessage />
@@ -103,7 +108,9 @@ export default function CreateGroupForm() {
             />
             <MultipleUsersSelect setSelectedUsers={setSelectedUsers} />
           </div>
-          <Button className="w-full">Create Group</Button>
+          <Button className="w-full" disabled={mutation.isPending}>
+            Create Group
+          </Button>
         </form>
       </Form>
     </div>

@@ -1,22 +1,24 @@
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type NavBaseButtonProps = {
   children: React.ReactNode;
   onClickFn?: () => void;
-};
+} & React.ComponentPropsWithRef<"div">;
 
 export default function NavBaseButton({
   children,
   onClickFn,
+  className,
 }: NavBaseButtonProps) {
   return (
-    <Button
-      size={"icon"}
-      variant={"outline"}
-      className="size-10 md:size-12"
+    <div
+      className={cn(
+        "flex size-10 items-center justify-center rounded-md border transition-all hover:bg-secondary md:size-12",
+        className,
+      )}
       onClick={onClickFn}
     >
       {children}
-    </Button>
+    </div>
   );
 }

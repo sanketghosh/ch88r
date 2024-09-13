@@ -30,14 +30,10 @@ export default function SideNavbar() {
 
         <div className="flex flex-col">
           {/* user settings and user realed sheet open */}
-          <Link
-            to={"/account"}
-            className={cn(
-              buttonVariants({ size: "icon", variant: "default" }),
-              "size-12",
-            )}
-          >
-            <UserIcon />
+          <Link to={"/account"}>
+            <NavBaseButton className="bg-foreground text-background hover:bg-muted-foreground">
+              <UserIcon />
+            </NavBaseButton>
           </Link>
         </div>
       </div>

@@ -1,7 +1,6 @@
 // PACKAGES
 import { useEffect, useState } from "react";
 import * as searchUsers from "@/actions/users-actions/search-users";
-import useAddUserModal from "@/hooks/use-add-user-modal";
 import { useQuery } from "@tanstack/react-query";
 import { FrownIcon, Loader2Icon, SearchIcon, UserPlusIcon } from "lucide-react";
 
@@ -13,11 +12,13 @@ import UsersNotFoundScreen from "@/components/messages/users-not-found-screen";
 import { UserType } from "@/types";
 import NavBaseButton from "../buttons/nav-base-button";
 import ConfirmIndividualConversationDialog from "./confirm-individual-conversation-dialog";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 
 export default function SearchUsers() {
-  const { isOpen, onOpen, onClose } = useAddUserModal();
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, setDebouncedQuery] = useState<string>(query);
+
+  const [selectUser, setSelectUser] = useState<UserType>();
 
   // Debouncing the query to avoid sending too many requests
   useEffect(() => {
@@ -47,15 +48,18 @@ export default function SearchUsers() {
     }
   };
 
-  return (
-    <>
-      <NavBaseButton onClickFn={onOpen}>
-        <UserPlusIcon className="size-5" />
-      </NavBaseButton>
+  const handleSelectUser = (user: UserType) => {
+    setSelectUser(user);
+  };
 
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <NavBaseButton>
+          <UserPlusIcon className="size-5" />
+        </NavBaseButton>
+      </DialogTrigger>
       <DialogWrapper
-        onModalClose={onClose}
-        isModalOpen={isOpen}
         dialogTitle="Add a new user to chat."
         dialogDescription="Search user by username or email and add one."
       >
@@ -84,7 +88,13 @@ export default function SearchUsers() {
                 <SearchUserCards
                   key={user.email + user.username}
                   user={user}
-                  buttonElement={<ConfirmIndividualConversationDialog />}
+                  buttonElement={
+                    <ConfirmIndividualConversationDialog
+                      handleSelectUser={handleSelectUser}
+                      selectedUser={selectUser}
+                      user={user}
+                    />
+                  }
                 />
               ))}
             </div>
@@ -93,6 +103,6 @@ export default function SearchUsers() {
           )}
         </div>
       </DialogWrapper>
-    </>
+    </Dialog>
   );
 }

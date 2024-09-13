@@ -174,6 +174,7 @@ function AddUserButton({ handleButtonClick, user }: AddUserButtonProps) {
       onClick={() => handleButtonClick(user)}
       variant={"secondary"}
       size={"icon"}
+      type="button"
     >
       <PlusCircleIcon />
     </Button>

@@ -1,18 +1,64 @@
 // PACKAGES
 import { MessageSquareIcon } from "lucide-react";
 
-// LOCAL MODULES
-import useConfirmIndividualConversation from "@/hooks/use-confirmation-individual-conversation-modal";
-
 // COMPONENTS
 import { Button } from "@/components/ui/button";
-import DialogWrapper from "@/components/dialogs/dialog-wrapper";
+import { UserType } from "@/types";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
-export default function ConfirmIndividualConversationDialog() {
-  const { isOpen, onClose, onOpen } = useConfirmIndividualConversation();
+type ConfirmIndividualConversationDialogProps = {
+  user: UserType;
+  handleSelectUser: (user: UserType) => void;
+  selectedUser: UserType | undefined;
+};
 
+export default function ConfirmIndividualConversationDialog({
+  user,
+  handleSelectUser,
+  selectedUser,
+}: ConfirmIndividualConversationDialogProps) {
   return (
-    <div>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          size={"icon"}
+          variant={"secondary"}
+          onClick={() => handleSelectUser(user)}
+        >
+          <MessageSquareIcon />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>
+            Start Conversation with {selectedUser?.username}
+          </DialogTitle>
+          <DialogDescription>
+            Click start conversation to start conversation with{" "}
+            {selectedUser?.username} or click cancel to cancel.
+          </DialogDescription>
+          <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
+            <Button size={"sm"}>Start Conversation</Button>
+            <DialogClose asChild>
+              <Button variant={"destructive"} size={"sm"}>
+                Cancel
+              </Button>
+            </DialogClose>
+          </div>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+}
+/*  <div>
       <Button onClick={onOpen} size={"icon"} variant={"secondary"}>
         <MessageSquareIcon />
       </Button>
@@ -30,6 +76,4 @@ export default function ConfirmIndividualConversationDialog() {
           </Button>
         </div>
       </DialogWrapper>
-    </div>
-  );
-}
+    </div> */

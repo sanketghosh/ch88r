@@ -1,5 +1,4 @@
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -11,28 +10,21 @@ type DialogWrapperProps = {
   dialogTitle?: string;
   dialogDescription?: string;
   children: React.ReactNode;
-  isModalOpen?: boolean;
-  onModalClose: () => void;
 };
 
 export default function DialogWrapper({
   dialogTitle,
   dialogDescription,
   children,
-  isModalOpen,
-  onModalClose,
 }: DialogWrapperProps) {
   return (
-    <Dialog open={isModalOpen}>
-      <DialogContent closeDialog={onModalClose}>
-        <DialogHeader>
-          <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogDescription>{dialogDescription}</DialogDescription>
-        </DialogHeader>
-        {children}
-
-        <DialogFooter></DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{dialogTitle}</DialogTitle>
+        <DialogDescription>{dialogDescription}</DialogDescription>
+      </DialogHeader>
+      {children}
+      <DialogFooter></DialogFooter>
+    </DialogContent>
   );
 }

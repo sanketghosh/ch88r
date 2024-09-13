@@ -1,19 +1,13 @@
-import { MessageCircleIcon, PlusSquareIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { UserType } from "@/types";
 
 type SearchUserCardsProps = {
-  forGroupSearch?: boolean;
-  handleButtonClick: (user: UserType) => void;
   user: UserType;
-  buttonType?: "submit" | "button";
+  buttonElement: React.ReactElement;
 };
 
 export default function SearchUserCards({
   user,
-  forGroupSearch,
-  handleButtonClick,
-  buttonType = "submit",
+  buttonElement,
 }: SearchUserCardsProps) {
   return (
     <div className="flex cursor-pointer items-center justify-between rounded-lg border bg-background px-3 py-2 hover:bg-secondary/30">
@@ -28,14 +22,7 @@ export default function SearchUserCards({
           <p className="text-foreground/70">{user.email}</p>
         </div>
       </div>
-      <Button
-        size={"icon"}
-        variant={"secondary"}
-        onClick={() => handleButtonClick(user)}
-        type={buttonType}
-      >
-        {forGroupSearch ? <PlusSquareIcon /> : <MessageCircleIcon />}
-      </Button>
+      {buttonElement}
     </div>
   );
 }

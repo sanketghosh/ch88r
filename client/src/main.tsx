@@ -9,6 +9,8 @@ import "@/index.css";
 import { AuthContextProvider } from "@/providers/auth-context-provider.tsx";
 import { ThemeProvider } from "@/providers/theme-provider.tsx";
 
+
+// create query client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

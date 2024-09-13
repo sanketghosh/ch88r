@@ -1,7 +1,7 @@
 // PACKAGES
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { FrownIcon, Loader2Icon, XIcon } from "lucide-react";
+import { FrownIcon, Loader2Icon, PlusCircleIcon, XIcon } from "lucide-react";
 
 // LOCAL MODULES
 import { UserType } from "@/types";
@@ -13,6 +13,7 @@ import ChatUserCardSkeleton from "@/components/skeletons/chat-user-card-skeleton
 import UsersNotFoundScreen from "@/components/messages/users-not-found-screen";
 import SearchUserCards from "@/components/cards/search-user-card";
 import { Label } from "../ui/label";
+import { Button } from "../ui/button";
 
 type MultipleUsersSelectProps = {
   setSelectedUsers: (users: UserType[]) => void;
@@ -147,14 +148,34 @@ export default function MultipleUsersSelect({
               <SearchUserCards
                 key={user.email + user.username}
                 user={user}
-                forGroupSearch
-                handleButtonClick={handleSelectUser}
-                buttonType="button"
+                buttonElement={
+                  <AddUserButton
+                    handleButtonClick={handleSelectUser}
+                    user={user}
+                  />
+                }
               />
             ))}
           </div>
         </div>
       ) : null}
     </div>
+  );
+}
+
+type AddUserButtonProps = {
+  user: UserType;
+  handleButtonClick: (user: UserType) => void;
+};
+
+function AddUserButton({ handleButtonClick, user }: AddUserButtonProps) {
+  return (
+    <Button
+      onClick={() => handleButtonClick(user)}
+      variant={"secondary"}
+      size={"icon"}
+    >
+      <PlusCircleIcon />
+    </Button>
   );
 }

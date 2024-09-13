@@ -12,6 +12,7 @@ import DialogWrapper from "@/components/dialogs/dialog-wrapper";
 import UsersNotFoundScreen from "@/components/messages/users-not-found-screen";
 import { UserType } from "@/types";
 import NavBaseButton from "../buttons/nav-base-button";
+import ConfirmIndividualConversationDialog from "./confirm-individual-conversation-dialog";
 
 export default function SearchUsers() {
   const { isOpen, onOpen, onClose } = useAddUserModal();
@@ -83,7 +84,7 @@ export default function SearchUsers() {
                 <SearchUserCards
                   key={user.email + user.username}
                   user={user}
-                  handleButtonClick={() => {}}
+                  buttonElement={<ConfirmIndividualConversationDialog />}
                 />
               ))}
             </div>

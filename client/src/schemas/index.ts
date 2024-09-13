@@ -101,3 +101,11 @@ export const CreateGroupSchema = z.object({
   }),
   groupParticipantsIds: z.array(z.string()),
 });
+
+/* 
+START INDIVIDUAL CONVERSATION
+*/
+
+export const StartIndividualConversationSchema = z.object({
+  participantId: z.string(),
+});

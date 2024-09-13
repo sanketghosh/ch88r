@@ -1,9 +1,11 @@
 // PACKAGES
 import { MessageSquareIcon } from "lucide-react";
 
+// LOCAL MODULES
+import { UserType } from "@/types";
+
 // COMPONENTS
 import { Button } from "@/components/ui/button";
-import { UserType } from "@/types";
 import {
   Dialog,
   DialogClose,
@@ -12,7 +14,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
+import StartIndividualForm from "@/components/forms/chat-forms/start-individual-conversation-form";
 
 type ConfirmIndividualConversationDialogProps = {
   user: UserType;
@@ -45,10 +48,11 @@ export default function ConfirmIndividualConversationDialog({
             Click start conversation to start conversation with{" "}
             {selectedUser?.username} or click cancel to cancel.
           </DialogDescription>
+
           <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
-            <Button size={"sm"}>Start Conversation</Button>
+            <StartIndividualForm selectedUserId={selectedUser?.id} />
             <DialogClose asChild>
-              <Button variant={"destructive"} size={"sm"}>
+              <Button variant={"destructive"} size={"sm"} type="button">
                 Cancel
               </Button>
             </DialogClose>
@@ -58,22 +62,24 @@ export default function ConfirmIndividualConversationDialog({
     </Dialog>
   );
 }
-/*  <div>
-      <Button onClick={onOpen} size={"icon"} variant={"secondary"}>
+/*  
+<div>
+    <Button onClick={onOpen} size={"icon"} variant={"secondary"}>
         <MessageSquareIcon />
-      </Button>
+    </Button>
 
-      <DialogWrapper
+    <DialogWrapper
         onModalClose={onClose}
         dialogTitle="Start conversation"
         dialogDescription="Click start conversation to start you conversation with the user you selected or cancel."
         isModalOpen={isOpen}
-      >
-        <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
-          <Button size={"sm"}>Start Conversation</Button>
-          <Button onClick={onClose} variant={"destructive"} size={"sm"}>
-            Cancel
-          </Button>
-        </div>
-      </DialogWrapper>
-    </div> */
+    >
+       <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
+        <Button size={"sm"}>Start Conversation</Button>
+        <Button onClick={onClose} variant={"destructive"} size={"sm"}>
+          Cancel
+        </Button>
+      </div>
+    </DialogWrapper>
+    </div> 
+*/

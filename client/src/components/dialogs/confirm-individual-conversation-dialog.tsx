@@ -50,7 +50,7 @@ export default function ConfirmIndividualConversationDialog({
           </DialogDescription>
 
           <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0 ">
-            <StartIndividualForm selectedUserId={selectedUser?.id} />
+            <StartIndividualForm participantId={selectedUser?.id} />
             <DialogClose asChild>
               <Button variant={"destructive"} size={"sm"} type="button">
                 Cancel

@@ -9,11 +9,11 @@ import * as startIndividualChat from "@/actions/chat-actions/individual-actions/
 import { Button } from "@/components/ui/button";
 
 type StartIndividualFormProps = {
-  selectedUserId: string | undefined;
+  participantId: string | undefined;
 };
 
 export default function StartIndividualForm({
-  selectedUserId,
+  participantId,
 }: StartIndividualFormProps) {
   const queryClient = useQueryClient();
 
@@ -33,9 +33,9 @@ export default function StartIndividualForm({
 
   const formSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedUserId) {
-      mutation.mutate(selectedUserId); // Assuming your schema requires userId
-      console.log(selectedUserId);
+    if (participantId) {
+      mutation.mutate(participantId);
+      console.log(participantId);
     }
   };
 

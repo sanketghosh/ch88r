@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import NavBaseButton from "../buttons/nav-base-button";
+import NavBaseButton from "@/components/buttons/nav-base-button";
 import { HeartIcon, MessageSquareIcon, UserIcon } from "lucide-react";
-import SearchUsers from "../dialogs/search-users";
-import CreateGroupDialog from "../dialogs/create-group-dialog";
+import SearchUsers from "@/components/dialogs/search-users";
+import CreateGroupDialog from "@/components/dialogs/create-group-dialog";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "@/components/ui/button";
+
 
 export default function BottomBar() {
   return (

@@ -1,4 +1,5 @@
 import { UserType } from "@/types";
+import profilePicPlaceholder from "@/images/placeholder-user-dp.svg"
 
 type SearchUserCardsProps = {
   user: UserType;
@@ -13,7 +14,7 @@ export default function SearchUserCards({
     <div className="flex cursor-pointer items-center justify-between rounded-lg border bg-background px-3 py-2 hover:bg-secondary/30">
       <div className="flex items-center gap-4">
         <img
-          src="./profile-pic1.svg"
+          src={profilePicPlaceholder}
           alt=""
           className="size-12 rounded-full bg-secondary"
         />

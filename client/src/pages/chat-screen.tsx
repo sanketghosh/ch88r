@@ -5,7 +5,7 @@ export default function ChatScreen() {
   return (
     <div className="flex">
       <ChatSection />
-      <ChattingWithPeersDetails />
+      {/*<ChattingWithPeersDetails />*/}
     </div>
   );
 }

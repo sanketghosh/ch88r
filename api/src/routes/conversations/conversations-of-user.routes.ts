@@ -3,7 +3,14 @@ import { getAllConversationsOfAUserHandler } from "../../controllers/conversatio
 import { verifyTokenHandler } from "../../middleware/verify-token.middleware";
 
 const router = express.Router();
+const conversationsRouter = express.Router();
 
-router.get("/", verifyTokenHandler, getAllConversationsOfAUserHandler);
+conversationsRouter.get(
+  "/",
+  verifyTokenHandler,
+  getAllConversationsOfAUserHandler,
+);
+
+router.use("/conversations", conversationsRouter);
 
 export default router;

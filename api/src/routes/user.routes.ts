@@ -7,7 +7,11 @@ import { verifyTokenHandler } from "../middleware/verify-token.middleware";
 
 const router = express.Router();
 
-router.get("/", verifyTokenHandler, getAllUsersHandlers);
-router.get("/search", verifyTokenHandler, searchUsersHandler);
+const userRouter = express.Router();
+
+userRouter.get("/", verifyTokenHandler, getAllUsersHandlers);
+userRouter.get("/search", verifyTokenHandler, searchUsersHandler);
+
+router.use("/users", userRouter);
 
 export default router;

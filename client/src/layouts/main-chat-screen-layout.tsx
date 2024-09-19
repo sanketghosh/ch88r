@@ -7,7 +7,7 @@ export default function MainChatScreenLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="max-w-[1450px] mx-auto flex border-x">
+    <main className="mx-auto flex max-w-[1450px] border-x">
       <SideNavbar />
       <ChatSidebar />
       {children}

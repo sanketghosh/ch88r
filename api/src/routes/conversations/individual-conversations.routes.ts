@@ -3,8 +3,15 @@ import { startIndividualConversationHandler } from "../../controllers/conversati
 import { verifyTokenHandler } from "../../middleware/verify-token.middleware";
 
 const router = express.Router();
+const individualConversationRouter = express.Router();
 
 // start 1v1 conversations
-router.post("/", verifyTokenHandler, startIndividualConversationHandler);
+individualConversationRouter.post(
+  "/",
+  verifyTokenHandler,
+  startIndividualConversationHandler,
+);
+
+router.use("/individual-conversation", individualConversationRouter);
 
 export default router;

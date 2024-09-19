@@ -9,24 +9,39 @@ import {
 import { verifyTokenHandler } from "../../middleware/verify-token.middleware";
 
 const router = express.Router();
+const groupConversationRouter = express.Router();
 
 // start group conversation
-router.post("/", verifyTokenHandler, startGroupConversationHandler);
+groupConversationRouter.post(
+  "/",
+  verifyTokenHandler,
+  startGroupConversationHandler,
+);
 
 // rename group
-router.put(
+groupConversationRouter.put(
   "/update-group-details",
   verifyTokenHandler,
-  updateGroupDetailsHandler
+  updateGroupDetailsHandler,
 );
 
 // add user to group
-router.post("/add-user", verifyTokenHandler, addUserToGroupHandler);
+groupConversationRouter.post(
+  "/add-user",
+  verifyTokenHandler,
+  addUserToGroupHandler,
+);
 
 // leave group handler
-router.post("/leave-group", verifyTokenHandler, leaveGroupHandler);
+groupConversationRouter.post(
+  "/leave-group",
+  verifyTokenHandler,
+  leaveGroupHandler,
+);
 
 // kick user handler
-router.post("/kick-user", verifyTokenHandler, kickUserHandler);
+groupConversationRouter.post("/kick-user", verifyTokenHandler, kickUserHandler);
+
+router.use("/group-conversation", groupConversationRouter);
 
 export default router;

@@ -1,11 +1,21 @@
 import {
-	Sheet, SheetTrigger, SheetHeader, SheetDescription, SheetContent
-} from "@/components/ui/sheet"
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
-export default function ChatDetails(){
-	return (
-		<Sheet>
-			<SheetTrigger></SheetTrigger>
-		</Sheet>
-)
+type ChatDetailsProps = {
+  triggerComponent: React.ReactElement;
+};
+
+export default function ChatDetails({ triggerComponent }: ChatDetailsProps) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>{triggerComponent}</SheetTrigger>
+      <SheetContent>
+        <SheetTitle>Chat Details</SheetTitle>
+      </SheetContent>
+    </Sheet>
+  );
 }

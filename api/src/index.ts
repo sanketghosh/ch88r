@@ -3,8 +3,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
-import swaggerUi from "swagger-ui-express"
-import swaggerDoc from "./swagger.json"
+import swaggerUi from "swagger-ui-express";
+import swaggerDoc from "./swagger.json";
 
 // imported routes
 import {
@@ -29,21 +29,18 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-  })
+  }),
 );
 
-
-
 // routes
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/users", userRotes);
-app.use("/api/v1/group-conversation", groupConversationRoutes);
-app.use("/api/v1/individual-conversation", individualConversationRoutes);
-app.use("/api/v1/conversations", conversationOfUserRoutes);
-
+app.use("/api/v1", authRoutes);
+app.use("/api/v1", userRotes);
+app.use("/api/v1", groupConversationRoutes);
+app.use("/api/v1", individualConversationRoutes);
+app.use("/api/v1", conversationOfUserRoutes);
 
 // swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // app listener
 app.listen(PORT, () => {
